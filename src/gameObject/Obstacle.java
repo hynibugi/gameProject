@@ -4,6 +4,7 @@ package gameObject;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Image;
 import java.awt.Rectangle;
 
 import javax.swing.JComponent;
@@ -12,8 +13,8 @@ public class Obstacle extends JComponent {
 	private Rectangle hitbox;
 	private int x, y;
 	private int width, height;
-	
-	
+	private Image huddle;
+
 	public int getX() {
 		return x;
 	}
@@ -54,10 +55,9 @@ public class Obstacle extends JComponent {
 	@Override
 	protected void paintComponent(Graphics g) {
 //		super.paintComponent(g);
-		g.setColor(Color.RED);
+		g.setColor(Color.black);
 		g.fillRect(0, 0, width, height);
 		g.dispose();
 	}
-	
-	
+
 }

@@ -23,7 +23,7 @@ public class showGame extends JFrame {
    ClassLoader classLoader = getClass().getClassLoader();
    Toolkit kit = Toolkit.getDefaultToolkit();
    Image imC = kit.getImage(classLoader.getResource("original.png"));
-   Image imbg = kit.getImage(classLoader.getResource("a.png"));
+   Image imbg = kit.getImage(classLoader.getResource("background.png"));
    Image jelly = kit.getImage(classLoader.getResource("jelly.png"));
    
    int whereX;
@@ -58,7 +58,7 @@ private int frameX;
       setContentPane(contentPane);
       contentPane.setLayout(null);
       
-      Obstacle ob = new Obstacle(100, 200, 100, 100);
+      Obstacle ob = new Obstacle(500, 300, 50, 50);
       ob.setBounds(ob.getX(), ob.getY(), 100, 100);
       
       JLabel bgIng = new JLabel(""); //배경 
@@ -74,6 +74,7 @@ private int frameX;
                x = 0;
             } else {
                bgIng.setLocation(x, 0);
+               ob.updatePosition(-10, 0);
             }
          }
       });

@@ -23,7 +23,7 @@ public class showGame extends JFrame {
    ClassLoader classLoader = getClass().getClassLoader();
    Toolkit kit = Toolkit.getDefaultToolkit();
    Image imC = kit.getImage(classLoader.getResource("original.png"));
-   Image imbg = kit.getImage(classLoader.getResource("a.png"));
+   Image imbg = kit.getImage(classLoader.getResource("background.png"));
    Image jelly = kit.getImage(classLoader.getResource("jelly.png"));
    
    int whereX;

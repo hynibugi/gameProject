@@ -1,3 +1,4 @@
+package info;
 
 public class Userinfo {
 	private int no;

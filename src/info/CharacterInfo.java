@@ -1,3 +1,4 @@
+package info;
 
 public class CharacterInfo {
 	// 게임중인 캐릭터 (쿠키)

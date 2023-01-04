@@ -1,3 +1,4 @@
+package Frames;
 
 import java.awt.Image;
 import java.awt.Toolkit;
@@ -13,6 +14,9 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 import javax.swing.border.EmptyBorder;
+
+import gameObject.Jelly;
+import gameObject.Obstacle;
 
 public class showGame extends JFrame {
 

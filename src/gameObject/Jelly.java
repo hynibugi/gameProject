@@ -1,3 +1,4 @@
+package gameObject;
 import java.awt.Image;
 
 public class Jelly {

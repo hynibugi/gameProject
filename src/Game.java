@@ -1,3 +1,6 @@
+import Frames.showGame;
+import info.CharacterInfo;
+
 public class Game {	
 	
 	private static int y;

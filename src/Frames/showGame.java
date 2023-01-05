@@ -279,5 +279,7 @@ public class showGame extends JFrame {
 			g.dispose();
 		}
 	}
-
+	public void showGUI() {
+		setVisible(true);
+	}
 }

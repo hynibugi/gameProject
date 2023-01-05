@@ -53,8 +53,8 @@ public class Menu extends JFrame {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				//new showGame().showGUI();
-				//dispose();
+				new showGame().setVisible(true);
+				dispose();
 				
 			}
 		});

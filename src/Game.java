@@ -6,8 +6,12 @@ import info.CharacterInfo;
 public class Game {	
 	
 	private static int y;
+	private static showGame first;
+	
 	
 	public static void main(String[] args) {
+		
+		
 		
 		System.out.println("게임 시작");
 		int x = 0;
@@ -18,8 +22,11 @@ public class Game {
 		
 		CharacterInfo c = new CharacterInfo(1, 1, x, y, money, time, jelly);
 
-		showGame first = new showGame();
+		first = new showGame();
 		first.setVisible(true);
 		
+	}
+	public void showGUI() {
+		first.setVisible(true);
 	}
 }

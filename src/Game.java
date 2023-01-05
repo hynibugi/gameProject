@@ -1,3 +1,5 @@
+import java.io.IOException;
+
 import Frames.showGame;
 import info.CharacterInfo;
 
@@ -17,7 +19,6 @@ public class Game {
 		CharacterInfo c = new CharacterInfo(1, 1, x, y, money, time, jelly);
 
 		showGame first = new showGame();
-			
 		first.setVisible(true);
 		
 	}

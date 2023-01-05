@@ -1,5 +1,8 @@
 package Frames;
 
+import java.awt.Color;
+import java.awt.Container;
+import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
@@ -15,6 +18,7 @@ import java.util.TimerTask;
 
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
+import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -40,7 +44,7 @@ public class showGame extends JFrame {
 	private Timer timer; // 배경 타이머
 	private Timer timerJ; // 젤리 타이머
 	private int x;
-
+	final int BLACK = -16777216;
 	private Jelly jellyS;
 	private int frameX;
 
@@ -60,13 +64,27 @@ public class showGame extends JFrame {
 		this.whereY = whereY;
 	}
 
-	public showGame() {
-		try {
-			grapPix();
-		} catch (IOException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
+	public void grapPix() throws IOException {
+
+		BufferedImage img = ImageIO.read(showGame.class.getClassLoader().getResource("step.jpg"));
+		for (int i = 0; i < img.getWidth(); i++) {
+			int rgb = img.getRGB(i, img.getHeight() - 1);
+
+			if (rgb == BLACK) { // 검정색 이라면?
+				System.out.println("발판");
+				MyComponent compo = new MyComponent();
+				compo.setBounds(i * 60, 347, 60, 60);
+				contentPane.add(compo); /// 추가하고보이게
+			} else {
+				System.out.println("발판아님");
+			}
+
 		}
+
+	}
+
+	public showGame() {
+
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 701, 437);
 		contentPane = new JPanel();
@@ -91,6 +109,7 @@ public class showGame extends JFrame {
 				} else {
 					bgIng.setLocation(x, 0);
 					ob.updatePosition(-10, 0);
+
 				}
 			}
 		});
@@ -163,27 +182,23 @@ public class showGame extends JFrame {
 			}
 		});
 		characterIng.setIcon(new ImageIcon(imC));
+		try {
+			grapPix();
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		}
 		contentPane.add(jIng);
 		contentPane.add(ob);
 		contentPane.add(characterIng);
 		contentPane.add(bgIng);
 	}
 
-	public void grapPix() throws IOException {
-//		File file = new File("step.jpg");
-		BufferedImage img = ImageIO.read(showGame.class.getClassLoader().getResource("step.png"));
-		int width = img.getWidth();
-		int height = img.getHeight();
-		int[] pixels = new int[width * height];
-		PixelGrabber grab = new PixelGrabber(img, 0, 0, width, height, pixels, 0, width);
-		try {
-			grab.grabPixels();
-//			for (int i : pixels) {
-//				System.out.println(i);
-//			}
-			System.out.println(pixels.length);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
+	class MyComponent extends JComponent {
+		public void paintComponent(Graphics g) {
+			g.setColor(Color.black);
+			g.fillRect(0, 0, 60, 60);
+			g.dispose();
 		}
 	}
+
 }

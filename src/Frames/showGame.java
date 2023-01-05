@@ -66,12 +66,12 @@ public class showGame extends JFrame {
 			int rgb = img.getRGB(i, img.getHeight() - 1);
 
 			if (rgb == BLACK) { // 검정색 이라면?
-				System.out.println("발판");
+//				System.out.println("발판");
 				MyComponent compo = new MyComponent();
 				compo.setBounds(i * 60, 347, 60, 60);
 				contentPane.add(compo); /// 추가하고보이게
 			} else {
-				System.out.println("발판아님");
+//				System.out.println("발판아님");
 			}
 
 		}
@@ -159,12 +159,12 @@ public class showGame extends JFrame {
 					characterIng.setBounds(whereX, whereY, 100, 100);
 					count++;
 					if (count == 1) {
-						System.out.println("1단점프");
+//						System.out.println("1단점프");
 						System.out.println("(x, y) = " + getWhereX() + ", " + getWhereY());
 					}
 
 					if (count == 2) {
-						System.out.println("2단점프");
+//						System.out.println("2단점프");
 						whereY = 180;
 						characterIng.setBounds(whereX, whereY, 100, 100);
 						System.out.println("(x, y) = " + getWhereX() + ", " + getWhereY());
@@ -172,11 +172,11 @@ public class showGame extends JFrame {
 					}
 				}
 				if (key == KeyEvent.VK_DOWN) {
-					System.out.println("슬라이드");
+//					System.out.println("슬라이드");
 					count = 0;
 					whereY = 280;
 					characterIng.setBounds(whereX, whereY, 100, 100);
-					System.out.println("(x, y) = " + getWhereX() + ", " + getWhereY());
+//					System.out.println("(x, y) = " + getWhereX() + ", " + getWhereY());
 				}
 			}
 		});

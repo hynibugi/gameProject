@@ -1,22 +1,45 @@
 package Frames;
-import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.EventQueue;
-
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
-import javax.swing.JLabel;
 import java.awt.Font;
+import java.awt.Image;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
-import java.awt.Color;
+
+import info.UserinfoRankingImpl;
 
 public class Rank extends JFrame {
+	
+	ClassLoader classLoader = getClass().getClassLoader();
+	Toolkit kit = Toolkit.getDefaultToolkit();
+	
+	Image c1 = kit.getImage(classLoader.getResource("c1.png"));
+	Image c2 = kit.getImage(classLoader.getResource("c2.png"));
+	Image c3 = kit.getImage(classLoader.getResource("c3.png"));
+	Image c4 = kit.getImage(classLoader.getResource("c4.png"));
+	Image c5 = kit.getImage(classLoader.getResource("c5.png"));
+	
+	final Image[] imageC = {c1, c2, c3, c4, c5};
+	
+	final String[] imagetTitle = {"c1", "c2", "c3", "c4", "c5"};
 
+	final String[] rankTitle = {"1 등", "2 등", "3 등", "4 등", "5 등"};
+	
 	private JPanel contentPane;
+	private JLabel[] whatRank = new JLabel[rankTitle.length];
+	private JLabel[] whoNic = new JLabel[5];
+	private JLabel[] whoScore = new JLabel[5];
+	private JLabel[] whoCharacter = new JLabel[5];
+	
 
 	/**
 	 * Launch the application.
@@ -39,129 +62,113 @@ public class Rank extends JFrame {
 	 */
 	public Rank() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 500, 400);
+		setBounds(100, 100, 500, 420);
 		contentPane = new JPanel();
+		contentPane.setBackground(Color.WHITE);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
 		JPanel panel = new JPanel();
-		panel.setBorder(new LineBorder(new Color(0, 0, 0), 2));
+		//panel.setBorder(new LineBorder(new Color(0, 0, 0), 2));
+		panel.setBackground(new Color(144, 204, 255));
 		panel.setBounds(65, 54, 349, 71);
 		contentPane.add(panel);
 		panel.setLayout(null);
 		
-		JLabel lbl_characterA = new JLabel("캐릭터");
-		lbl_characterA.setBounds(48, 10, 57, 51);
+		// 캐릭터 -------------------------------------------------------
+		
+		UserinfoRankingImpl uRank = new UserinfoRankingImpl();
+		int bestCha = uRank.getBestcharacter(1);
+		
+		JLabel lbl_characterA = new JLabel("");
+		lbl_characterA.setIcon(new ImageIcon(imageC[bestCha]));
+		lbl_characterA.setBounds(39, 10, 57, 51);
 		panel.add(lbl_characterA);
 		
-		JLabel lbl_rankA = new JLabel("1등");
+		
+		
+		for (int i = 1; i < whoCharacter.length; i++) {
+			int orderByCha = uRank.getBestcharacter(i + 1);
+			System.out.println(orderByCha);
+			whoCharacter[i] = new JLabel("");
+			whoCharacter[i].setIcon(new ImageIcon(imageC[orderByCha - 1]));
+			whoCharacter[i].setBounds(100, 134 + (i - 1) * 55 , 50, 50);
+			contentPane.add(whoCharacter[i]);			
+		}
+		
+		
+		// 등수 -------------------------------------------------------
+		
+		JLabel lbl_rankA = new JLabel(rankTitle[0]);
 		lbl_rankA.setFont(new Font("맑은 고딕", Font.BOLD, 14));
 		lbl_rankA.setBounds(117, 10, 57, 51);
 		panel.add(lbl_rankA);
 		
-		JLabel lbl_nicknameA = new JLabel("닉네임");
+		for (int i = 1; i < whatRank.length; i++) {
+			whatRank[i] = new JLabel(rankTitle[i]);
+			whatRank[i].setFont(new Font("맑은 고딕", Font.BOLD, 14));
+			whatRank[i].setBounds(183, 141 + (i - 1) * 56 , 57, 35);
+			contentPane.add(whatRank[i]);
+		}
+	
+		// 닉네임 -------------------------------------------------------
+		
+		String bestNic = uRank.getBestNic(1);
+		JLabel lbl_nicknameA = new JLabel(bestNic);
 		lbl_nicknameA.setFont(new Font("맑은 고딕", Font.BOLD, 14));
 		lbl_nicknameA.setBounds(186, 10, 57, 51);
 		panel.add(lbl_nicknameA);
 		
-		JLabel lbl_scoreA = new JLabel("점수");
+		for (int i = 1; i < whoNic.length; i++) {
+			String orderByNic = uRank.getBestNic(i + 1);
+			whoNic[i] = new JLabel(orderByNic);
+			whoNic[i].setFont(new Font("맑은 고딕", Font.BOLD, 13));
+			whoNic[i].setBounds(252, 141 + (i - 1) * 56 , 57, 35);
+			contentPane.add(whoNic[i]);
+			
+		}
+		
+		// 점수 -------------------------------------------------------
+		
+		String bestScore = String.valueOf(uRank.getBestScore(1));
+		
+		JLabel lbl_scoreA = new JLabel(bestScore);
 		lbl_scoreA.setFont(new Font("맑은 고딕", Font.BOLD, 14));
 		lbl_scoreA.setBounds(255, 10, 57, 51);
 		panel.add(lbl_scoreA);
 		
-		JLabel lbl_characterB = new JLabel("캐릭터");
-		lbl_characterB.setBounds(114, 135, 57, 35);
-		contentPane.add(lbl_characterB);
+		for (int i = 1; i < whoScore.length; i++) {
+			
+			String orderByS = String.valueOf(uRank.getBestScore(i + 1));
+			
+			whoScore[i] = new JLabel(orderByS);
+			whoScore[i].setFont(new Font("맑은 고딕", Font.BOLD, 13));
+			whoScore[i].setBounds(325, 141 + (i - 1) * 56 , 57, 35);
+			contentPane.add(whoScore[i]);
+		}
 		
-		JLabel lbl_rankB = new JLabel("2등");
-		lbl_rankB.setFont(new Font("맑은 고딕", Font.BOLD, 13));
-		lbl_rankB.setBounds(183, 135, 57, 35);
-		contentPane.add(lbl_rankB);
 		
-		JLabel lbl_nicknameB = new JLabel("닉네임");
-		lbl_nicknameB.setFont(new Font("맑은 고딕", Font.BOLD, 13));
-		lbl_nicknameB.setBounds(252, 135, 57, 35);
-		contentPane.add(lbl_nicknameB);
-		
-		JLabel lbl_scoreB = new JLabel("점수");
-		lbl_scoreB.setFont(new Font("맑은 고딕", Font.BOLD, 13));
-		lbl_scoreB.setBounds(321, 135, 57, 35);
-		contentPane.add(lbl_scoreB);
-		
-		JLabel lbl_characterC = new JLabel("캐릭터");
-		lbl_characterC.setBounds(114, 180, 57, 35);
-		contentPane.add(lbl_characterC);
-		
-		JLabel lbl_rankC = new JLabel("3등");
-		lbl_rankC.setFont(new Font("맑은 고딕", Font.BOLD, 13));
-		lbl_rankC.setBounds(183, 180, 57, 35);
-		contentPane.add(lbl_rankC);
-		
-		JLabel lbl_nicknameC = new JLabel("닉네임");
-		lbl_nicknameC.setFont(new Font("맑은 고딕", Font.BOLD, 13));
-		lbl_nicknameC.setBounds(252, 180, 57, 35);
-		contentPane.add(lbl_nicknameC);
-		
-		JLabel lbl_scoreC = new JLabel("점수");
-		lbl_scoreC.setFont(new Font("맑은 고딕", Font.BOLD, 13));
-		lbl_scoreC.setBounds(321, 180, 57, 35);
-		contentPane.add(lbl_scoreC);
-		
-		JLabel lbl_characterD = new JLabel("캐릭터");
-		lbl_characterD.setBounds(114, 225, 57, 35);
-		contentPane.add(lbl_characterD);
-		
-		JLabel lbl_rankD = new JLabel("4등");
-		lbl_rankD.setFont(new Font("맑은 고딕", Font.BOLD, 13));
-		lbl_rankD.setBounds(183, 225, 57, 35);
-		contentPane.add(lbl_rankD);
-		
-		JLabel lbl_nicknameD = new JLabel("닉네임");
-		lbl_nicknameD.setFont(new Font("맑은 고딕", Font.BOLD, 13));
-		lbl_nicknameD.setBounds(252, 225, 57, 35);
-		contentPane.add(lbl_nicknameD);
-		
-		JLabel lbl_scoreD = new JLabel("점수");
-		lbl_scoreD.setFont(new Font("맑은 고딕", Font.BOLD, 13));
-		lbl_scoreD.setBounds(321, 225, 57, 35);
-		contentPane.add(lbl_scoreD);
-		
-		JLabel lbl_characterE = new JLabel("캐릭터");
-		lbl_characterE.setBounds(114, 270, 57, 35);
-		contentPane.add(lbl_characterE);
-		
-		JLabel lbl_rankE = new JLabel("5등");
-		lbl_rankE.setFont(new Font("맑은 고딕", Font.BOLD, 13));
-		lbl_rankE.setBounds(183, 270, 57, 35);
-		contentPane.add(lbl_rankE);
-		
-		JLabel lbl_nicknameE = new JLabel("닉네임");
-		lbl_nicknameE.setFont(new Font("맑은 고딕", Font.BOLD, 13));
-		lbl_nicknameE.setBounds(252, 270, 57, 35);
-		contentPane.add(lbl_nicknameE);
-		
-		JLabel lbl_scoreE = new JLabel("점수");
-		lbl_scoreE.setFont(new Font("맑은 고딕", Font.BOLD, 13));
-		lbl_scoreE.setBounds(321, 270, 57, 35);
-		contentPane.add(lbl_scoreE);
+		//--------------------------------------------------------------------
 		
 		JButton btn_back = new JButton("뒤로가기");
-		btn_back.setBounds(375, 10, 97, 23);
+		btn_back.setFont(new Font("맑은 고딕", Font.BOLD, 13));
+		btn_back.setBounds(400, 10, 97, 23);
+		btn_back.setBorder(null);
+		btn_back.setBackground(Color.WHITE);
 		btn_back.addActionListener(new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				new Menu().showGUI();
 				dispose();
-				
 			}
 		});
 		contentPane.add(btn_back);
 		
 		JLabel lbl_rank = new JLabel("순위");
-		lbl_rank.setFont(new Font("맑은 고딕", Font.BOLD, 15));
-		lbl_rank.setBounds(12, 14, 75, 23);
+		lbl_rank.setFont(new Font("맑은 고딕", Font.BOLD, 13));
+		lbl_rank.setBounds(12, 10, 75, 23);
 		contentPane.add(lbl_rank);
 	}
 	public void showGUI() {

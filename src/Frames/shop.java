@@ -1,5 +1,6 @@
 package Frames;
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
@@ -39,11 +40,14 @@ public class shop extends JFrame {
 		setBounds(100, 100, 500, 400);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		contentPane.setBackground(Color.WHITE);
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
 		JPanel panel = new JPanel();
 		panel.setBounds(12, 60, 460, 250);
+		panel.setBorder(new EmptyBorder(5, 5, 5, 5));
+		panel.setBackground(Color.WHITE);
 		contentPane.add(panel);
 		panel.setLayout(null);
 		

@@ -1,10 +1,14 @@
 package Frames;
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import info.UserinfoRepositoryImpl;
+
 import javax.swing.JLabel;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
@@ -16,10 +20,12 @@ import javax.swing.JButton;
 public class SignUp extends JFrame {
 
 	private JPanel contentPane;
-	private JTextField text_id;
-	private JTextField text_password;
-	private JTextField text_Re_password;
-	private JTextField text_nickname;
+	private String[] whatInfoTitle = {"아이디", "비밀번호", "비밀번호 재확인", "닉네임"};
+	private JLabel[] countResult = new JLabel[2];
+	private JLabel[] whatInfo = new JLabel[whatInfoTitle.length];
+	private JTextField[] text_info = new JTextField[4];
+	private JButton[] countBtn = new JButton[2];
+	private int cResult;
 
 	/**
 	 * Launch the application.
@@ -45,6 +51,7 @@ public class SignUp extends JFrame {
 		setBounds(100, 100, 500, 400);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		contentPane.setBackground(Color.WHITE);
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
@@ -53,58 +60,85 @@ public class SignUp extends JFrame {
 		lbl_SignUp.setBounds(12, 10, 68, 21);
 		contentPane.add(lbl_SignUp);
 		
-		JLabel lbl_id = new JLabel("아이디");
-		lbl_id.setFont(new Font("굴림", Font.BOLD, 13));
-		lbl_id.setBounds(58, 83, 57, 28);
-		contentPane.add(lbl_id);
+		// -----------------------------------------------------
 		
-		JLabel lbl_password = new JLabel("비밀번호");
-		lbl_password.setFont(new Font("굴림", Font.BOLD, 13));
-		lbl_password.setBounds(58, 121, 57, 28);
-		contentPane.add(lbl_password);
 		
-		JLabel lbl_Re_password = new JLabel("비밀번호 재확인");
-		lbl_Re_password.setFont(new Font("굴림", Font.BOLD, 13));
-		lbl_Re_password.setBounds(58, 159, 103, 28);
-		contentPane.add(lbl_Re_password);
+		for (int i = 0; i < whatInfo.length; i++) {
+			whatInfo[i] = new JLabel(whatInfoTitle[i]);
+			whatInfo[i].setFont(new Font("맑은 고딕", Font.BOLD, 14));
+			whatInfo[i].setBounds(30, 78 + i * 38, 110, 28);
+			contentPane.add(whatInfo[i]);
+		}
 		
-		JLabel lbl_nickname = new JLabel("닉네임");
-		lbl_nickname.setFont(new Font("굴림", Font.BOLD, 13));
-		lbl_nickname.setBounds(58, 197, 57, 28);
-		contentPane.add(lbl_nickname);
+		// -----------------------------------------------------
 		
-		text_id = new JTextField();
-		text_id.setBounds(218, 87, 116, 21);
-		contentPane.add(text_id);
-		text_id.setColumns(10);
+		for (int i = 0; i < 4; i++) {
+			text_info[i] = new JTextField();
+			text_info[i].setBounds(145, 83 + i * 38, 150, 21);
+			text_info[i].setColumns(20);
+			contentPane.add(text_info[i]);
+		}
 		
-		text_password = new JTextField();
-		text_password.setColumns(10);
-		text_password.setBounds(218, 125, 116, 21);
-		contentPane.add(text_password);
+		// -----------------------------------------------------
 		
-		text_Re_password = new JTextField();
-		text_Re_password.setColumns(10);
-		text_Re_password.setBounds(218, 163, 116, 21);
-		contentPane.add(text_Re_password);
+		UserinfoRepositoryImpl ur = new UserinfoRepositoryImpl();
 		
-		text_nickname = new JTextField();
-		text_nickname.setColumns(10);
-		text_nickname.setBounds(218, 201, 116, 21);
-		contentPane.add(text_nickname);
+		cResult = 0;
 		
-		JButton btn_doubleCheckA = new JButton("중복확인");
-		btn_doubleCheckA.setFont(new Font("맑은 고딕", Font.BOLD, 12));
-		btn_doubleCheckA.setBounds(348, 86, 89, 23);
-		contentPane.add(btn_doubleCheckA);
+		for (int i = 0; i < 2; i++) {
+			countBtn[i] = new JButton("중복확인");
+			countBtn[i].setFont(new Font("맑은 고딕", Font.BOLD, 12));
+			countBtn[i].setBounds(309, 82 + i * 114, 89, 23);
+			contentPane.add(countBtn[i]);
+			if (i == 0) {
+				countBtn[i].addActionListener(new ActionListener() {
+
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						String inputId = text_info[0].getText();
+						System.out.println(inputId);
+						int a = ur.countByID(inputId);
+						System.out.println(a);
+						if (a == 1) {
+							System.out.println("중복된 id");
+							countResult[0].setText("사용불가");
+						}
+					}
+					
+				});
+			} else {
+				countBtn[i].addActionListener(new ActionListener() {
+
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						String inputNickname = text_info[3].getText();
+						System.out.println(inputNickname);
+						int a = ur.countByNickName(inputNickname);
+						System.out.println(a);
+						if (a == 1) {
+							
+							System.out.println("중복된 id");
+							countResult[1].setText("사용불가");
+						}
+					}
+					
+				});
+			}
+		}
+	
+		for (int i = 0; i < 2; i++) { 
+				countResult[i] = new JLabel("");
+				countResult[i].setFont(new Font("맑은 고딕", Font.BOLD, 12));
+				countResult[i].setBounds(410, 82 + i * 114, 89, 23);
+				contentPane.add(countResult[i]);
+		}
+			
+		// -----------------------------------------------------
 		
-		JButton btn_doubleCheckB = new JButton("중복확인");
-		btn_doubleCheckB.setFont(new Font("맑은 고딕", Font.BOLD, 12));
-		btn_doubleCheckB.setBounds(348, 200, 89, 23);
-		contentPane.add(btn_doubleCheckB);
+		
 		
 		JButton btn_signup = new JButton("회원가입");
-		btn_signup.setBounds(109, 272, 97, 23);
+		btn_signup.setBounds(109, 300, 97, 23);
 		btn_signup.addActionListener(new ActionListener() {
 			
 			@Override
@@ -117,7 +151,7 @@ public class SignUp extends JFrame {
 		contentPane.add(btn_signup);
 		
 		JButton btn_back = new JButton("뒤로가기");
-		btn_back.setBounds(257, 272, 97, 23);
+		btn_back.setBounds(257, 300, 97, 23);
 		btn_back.addActionListener(new ActionListener() {
 			
 			@Override

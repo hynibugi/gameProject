@@ -1,5 +1,6 @@
 package Frames;
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
@@ -43,6 +44,7 @@ public class LogIn extends JFrame {
 		setBounds(100, 100, 500, 400);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		contentPane.setBackground(Color.WHITE);
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
@@ -58,11 +60,15 @@ public class LogIn extends JFrame {
 		
 		JPanel panel = new JPanel();
 		panel.setBounds(60, 62, 365, 210);
+		panel.setBorder(new EmptyBorder(5, 5, 5, 5));
+		panel.setBackground(Color.WHITE);
 		contentPane.add(panel);
 		panel.setLayout(null);
 		
 		JButton btn_signup = new JButton("회원가입");
 		btn_signup.setFont(new Font("맑은 고딕", Font.BOLD, 13));
+		btn_signup.setBorder(new EmptyBorder(5, 5, 5, 5));
+		btn_signup.setBackground(new Color(153, 204, 255));
 		btn_signup.setBounds(60, 141, 97, 35);
 		btn_signup.addActionListener(new ActionListener() {
 			
@@ -77,6 +83,8 @@ public class LogIn extends JFrame {
 		
 		JButton btn_login = new JButton("로그인");
 		btn_login.setFont(new Font("맑은 고딕", Font.BOLD, 13));
+		btn_login.setBorder(new EmptyBorder(5, 5, 5, 5));
+		btn_login.setBackground(new Color(153, 204, 255));
 		btn_login.setBounds(202, 141, 97, 35);
 		btn_login.addActionListener(new ActionListener() {
 			

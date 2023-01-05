@@ -1,7 +1,6 @@
 package Frames;
 
 import java.awt.Color;
-import java.awt.Container;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Toolkit;
@@ -10,11 +9,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.image.BufferedImage;
-import java.awt.image.PixelGrabber;
-import java.io.File;
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.TimerTask;
 
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
@@ -24,9 +19,9 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 import javax.swing.border.EmptyBorder;
-import javax.swing.plaf.synth.SynthTextPaneUI;
 
 import gameObject.Jelly;
+import gameObject.Jellyy;
 import gameObject.Obstacle;
 
 public class showGame extends JFrame {
@@ -35,7 +30,7 @@ public class showGame extends JFrame {
 	Toolkit kit = Toolkit.getDefaultToolkit();
 	Image imC = kit.getImage(classLoader.getResource("original.png"));
 	Image imbg = kit.getImage(classLoader.getResource("background.png"));
-	Image jelly = kit.getImage(classLoader.getResource("jelly.png"));
+//	Image jelly = kit.getImage(classLoader.getResource("jelly.png"));
 
 	int whereX;
 	int whereY;
@@ -115,23 +110,27 @@ public class showGame extends JFrame {
 		});
 		timer.start();
 
-		jellyS = new Jelly(700, 300, jelly);
-		JLabel jIng = new JLabel("");
-		jIng.setIcon(new ImageIcon(jellyS.getImJelly()));
-		jIng.setBounds(jellyS.getJellyX(), jellyS.getJellyY(), 50, 50);
+//		jellyS = new Jelly(700, 300, jelly);
+//		JLabel jIng = new JLabel("");
+//		jIng.setIcon(new ImageIcon(jellyS.getImJelly()));
+//		jIng.setBounds(jellyS.getJellyX(), jellyS.getJellyY(), 50, 50);
 
+		Jellyy jellyy = new Jellyy();
+		jellyy.makeJellyy(contentPane);
+		
 		frameX = 670;
-		timerJ = new Timer(1000, new ActionListener() {
+		
+		timerJ = new Timer(48, new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				frameX -= 10;
-				if (frameX <= -5000) {
-					timerJ.stop();
-					frameX = 0;
-				} else {
-					jIng.setLocation(frameX, 300);
-
+				frameX -= 5;
+				for (int i = 0; i < 3; i++) {
+					jellyy.getJellys()[i].setLocation(frameX, jellyy.getY(jellyy.getJellys()[i]));
 				}
+				if (frameX <= 120) {
+					jellyy.deleteJellyy(contentPane);
+				}
+				
 			}
 		});
 		timerJ.start();
@@ -187,7 +186,7 @@ public class showGame extends JFrame {
 		} catch (IOException e1) {
 			e1.printStackTrace();
 		}
-		contentPane.add(jIng);
+		characterIng.setIcon(new ImageIcon(imC));
 		contentPane.add(ob);
 		contentPane.add(characterIng);
 		contentPane.add(bgIng);

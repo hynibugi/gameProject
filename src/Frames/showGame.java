@@ -221,6 +221,7 @@ public class showGame extends JFrame {
 		characterIng.setBounds(whereX, whereY, 100, 100);
 		characterIng.addKeyListener(new KeyListener() {
 			private int count = 0;
+			
 
 			@Override
 			public void keyTyped(KeyEvent e) {

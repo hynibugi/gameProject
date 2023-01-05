@@ -26,7 +26,7 @@ public class Jellyy {
 	
 	public void makeJellyy(JPanel pnl) {
 		ClassLoader cl = getClass().getClassLoader();
-		URL jellyURL = cl.getResource("info\\choco.png");
+		URL jellyURL = cl.getResource("info/choco.png");
 		ImageIcon jellyIcon = new ImageIcon(jellyURL); 
 		
 		jellys = new JLabel[6];

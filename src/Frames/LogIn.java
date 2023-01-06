@@ -1,28 +1,33 @@
 package Frames;
-import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.EventQueue;
-
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
-import javax.swing.JLabel;
 import java.awt.Font;
+import java.awt.Image;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import javax.swing.JTextField;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JTextField;
+
+import info.UserinfoRepositoryImpl;
 
 public class LogIn extends JFrame {
+	
+	ClassLoader classLoader = getClass().getClassLoader();
+	Toolkit kit = Toolkit.getDefaultToolkit();
+	Image mainLogin = kit.getImage(classLoader.getResource("mainLogIn.png"));
+	
+	private JLabel contentPane;
+	private JLabel[] infoTitle = new JLabel[2];
+	private String[] infoTitles = {"아이디", "비밀번호"};
+	private JTextField[] infoField = new JTextField[2];
+	private JButton[] jbts = new JButton[2];
+	private String[] jbtsTitles = {"회원가입", "로그인"};
 
-	private JPanel contentPane;
-	private JTextField text_id;
-	private JTextField text_password;
-
-	/**
-	 * Launch the application.
-	 */
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -36,76 +41,65 @@ public class LogIn extends JFrame {
 		});
 	}
 
-	/**
-	 * Create the frame.
-	 */
 	public LogIn() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 500, 400);
-		contentPane = new JPanel();
-		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		contentPane.setBackground(Color.WHITE);
+		setBounds(100, 100, 505, 405);
+		contentPane = new JLabel();		
+		contentPane.setBorder(null);
+		contentPane.setIcon(new ImageIcon(mainLogin));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		JLabel lbl_id = new JLabel("아이디");
-		lbl_id.setFont(new Font("맑은 고딕", Font.BOLD, 16));
-		lbl_id.setBounds(123, 115, 68, 24);
-		contentPane.add(lbl_id);
+		for(int i = 0; i < infoTitle.length; i++) {
+			infoTitle[i] = new JLabel(infoTitles[i]);
+			infoTitle[i].setFont(new Font("맑은 고딕", Font.BOLD, 16));
+			infoTitle[i].setBounds(123, 115 + i * 34, 68, 24);
+			contentPane.add(infoTitle[i]);
+		}
 		
-		JLabel lbl_password = new JLabel("비밀번호");
-		lbl_password.setFont(new Font("맑은 고딕", Font.BOLD, 16));
-		lbl_password.setBounds(123, 149, 80, 24);
-		contentPane.add(lbl_password);
+		for(int i = 0; i < infoField.length; i++) {
+			infoField[i] = new JTextField(17);
+			infoField[i].setBounds(248, 117 + i * 34, 116, 21);
+			contentPane.add(infoField[i]);
+		}
 		
-		JPanel panel = new JPanel();
-		panel.setBounds(60, 62, 365, 210);
-		panel.setBorder(new EmptyBorder(5, 5, 5, 5));
-		panel.setBackground(Color.WHITE);
-		contentPane.add(panel);
-		panel.setLayout(null);
+		for (int i = 0; i < jbts.length; i++) {
+			jbts[i] = new JButton(jbtsTitles[i]);
+			jbts[i].setFont(new Font("맑은 고딕", Font.BOLD, 13));
+			jbts[i].setBorder(null);
+			jbts[i].setBounds(122 + i * 142, 210, 97, 35);
+			jbts[i].setBackground(new Color(176, 232, 103));
+			contentPane.add(jbts[i]);
+		}
 		
-		JButton btn_signup = new JButton("회원가입");
-		btn_signup.setFont(new Font("맑은 고딕", Font.BOLD, 13));
-		btn_signup.setBorder(new EmptyBorder(5, 5, 5, 5));
-		btn_signup.setBackground(new Color(153, 204, 255));
-		btn_signup.setBounds(60, 141, 97, 35);
-		btn_signup.addActionListener(new ActionListener() {
-			
+		jbts[0].addActionListener(new ActionListener() {		
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				new SignUp().showGUI();
-				dispose();
-				
 			}
 		});
-		panel.add(btn_signup);
 		
-		JButton btn_login = new JButton("로그인");
-		btn_login.setFont(new Font("맑은 고딕", Font.BOLD, 13));
-		btn_login.setBorder(new EmptyBorder(5, 5, 5, 5));
-		btn_login.setBackground(new Color(153, 204, 255));
-		btn_login.setBounds(202, 141, 97, 35);
-		btn_login.addActionListener(new ActionListener() {
-			
+		UserinfoRepositoryImpl ur = new UserinfoRepositoryImpl();
+		
+		jbts[1].addActionListener(new ActionListener() {		
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				new Menu().showGUI();
-				dispose();
 				
-			}
+				
+				String inputId = infoField[0].getText();
+				String inputPw = infoField[1].getText();
+				
+				int result = ur.login(inputId, inputPw);
+				
+				if (result == 1) {
+					new Menu().showGUI();
+					System.out.println("로그인 성공");
+				} else {
+					System.out.println("로그인 실패");
+				}
+			}	
 		});
-		panel.add(btn_login);
 		
-		text_id = new JTextField();
-		text_id.setBounds(183, 56, 116, 21);
-		panel.add(text_id);
-		text_id.setColumns(10);
-		
-		text_password = new JTextField();
-		text_password.setColumns(10);
-		text_password.setBounds(183, 87, 116, 21);
-		panel.add(text_password);
 	}
 	public void showGUI() {
 		setVisible(true);

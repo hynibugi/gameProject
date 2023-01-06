@@ -30,11 +30,11 @@ import gameObject.Obstacle;
 public class showGame extends JFrame {
 	MyComponent compo = new MyComponent();
 	ClassLoader classLoader = getClass().getClassLoader();
-	static List<MyComponent> list = new ArrayList<>();
+	List<MyComponent> list = new ArrayList<>();
 	Toolkit kit = Toolkit.getDefaultToolkit();
 	Image imC = kit.getImage(classLoader.getResource("original.png"));
 	Image imbg = kit.getImage(classLoader.getResource("background.png"));
-//	Image jelly = kit.getImage(classLoader.getResource("jelly.png"));
+//   Image jelly = kit.getImage(classLoader.getResource("jelly.png"));
 
 	int whereX;
 	int whereY;
@@ -68,31 +68,32 @@ public class showGame extends JFrame {
 		for (int i = 0; i < img.getWidth(); i++) {
 			int rgb = img.getRGB(i, img.getHeight() - 1);
 			if (rgb == BLACK) { // 검정색 이라면?
-				new MyComponent(); // 발판만들기
-				compo.setBounds(i * 60, 347, 60, 60);
-				getContentPane().add(compo); /// 추가하고보이게
-				list.add(compo);
+				compo = new MyComponent(); // 발판만들기
+				list.add(compo); //리스트에 발판추가
+				compo.setBounds(i * 60, 349, 60, 60); //범위설정
+				getContentPane().add(compo); /// 컴포넌트에 추가하고보이게
+
 			} else {
+				//아니면 아무수행 하지않음
 			}
 
 		}
-
-	}
-
-//	타이머로 발판 움직이기
-	public void steptimer() {
-		Timer step = new Timer(1000, new ActionListener() {
+		System.out.println(list.get(1)); //list에 값 담겨있음
+		Timer step = new Timer(10, new ActionListener() { //타이머 1초마다움직이게함
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				for (MyComponent j : list) {
-					j.setLocation(j.getX() - 10, j.getY());
+					j.setLocation(j.getX() - 10, j.getY()); //x값-10하기
 				}
 
 			}
 		});
-		step.start();
+		step.start(); //타이머시작
+		//왜안돼?
 
 	}
+
+//   타이머로 발판 움직이기
 
 	public showGame() {
 		contentPnl = new JPanel();
@@ -202,10 +203,10 @@ public class showGame extends JFrame {
 			}
 		});
 		timer2.start();
-//		jellyS = new Jelly(700, 300, jelly);
-//		JLabel jIng = new JLabel("");
-//		jIng.setIcon(new ImageIcon(jellyS.getImJelly()));
-//		jIng.setBounds(jellyS.getJellyX(), jellyS.getJellyY(), 50, 50);
+//      jellyS = new Jelly(700, 300, jelly);
+//      JLabel jIng = new JLabel("");
+//      jIng.setIcon(new ImageIcon(jellyS.getImJelly()));
+//      jIng.setBounds(jellyS.getJellyX(), jellyS.getJellyY(), 50, 50);
 
 		Jellyy jellyy = new Jellyy();
 		jellyy.makeJellyy(contentPnl);
@@ -251,12 +252,12 @@ public class showGame extends JFrame {
 					characterIng.setBounds(whereX, whereY, 100, 100);
 					count++;
 					if (count == 1) {
-//						System.out.println("1단점프");
+//                  System.out.println("1단점프");
 						System.out.println("(x, y) = " + getWhereX() + ", " + getWhereY());
 					}
 
 					if (count == 2) {
-//						System.out.println("2단점프");
+//                  System.out.println("2단점프");
 						whereY = 180;
 						characterIng.setBounds(whereX, whereY, 100, 100);
 						System.out.println("(x, y) = " + getWhereX() + ", " + getWhereY());
@@ -264,11 +265,11 @@ public class showGame extends JFrame {
 					}
 				}
 				if (key == KeyEvent.VK_DOWN) {
-//					System.out.println("슬라이드");
+//               System.out.println("슬라이드");
 					count = 0;
 					whereY = 280;
 					characterIng.setBounds(whereX, whereY, 100, 100);
-//					System.out.println("(x, y) = " + getWhereX() + ", " + getWhereY());
+//               System.out.println("(x, y) = " + getWhereX() + ", " + getWhereY());
 				}
 			}
 		});

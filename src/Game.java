@@ -1,13 +1,13 @@
 import java.io.IOException;
 
+import javax.swing.SwingUtilities;
+
 import Frames.showGame;
 import info.CharacterInfo;
 
 public class Game {	
 	
 	private static int y;
-	private static showGame first;
-	
 	
 	public static void main(String[] args) {
 		
@@ -22,11 +22,15 @@ public class Game {
 		
 		CharacterInfo c = new CharacterInfo(1, 1, x, y, money, time, jelly);
 
-		first = new showGame();
-		first.setVisible(true);
+		SwingUtilities.invokeLater(new Runnable() {
+			
+			@Override
+			public void run() {
+				showGame first = new showGame();
+				first.setVisible(true);
+				
+			}
+		});
 		
-	}
-	public void showGUI() {
-		first.setVisible(true);
 	}
 }

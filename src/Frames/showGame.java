@@ -2,7 +2,6 @@ package Frames;
 
 import java.awt.Color;
 import java.awt.Font;
-import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
@@ -11,6 +10,8 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
@@ -27,8 +28,9 @@ import gameObject.Jellyy;
 import gameObject.Obstacle;
 
 public class showGame extends JFrame {
-
+	MyComponent compo = new MyComponent();
 	ClassLoader classLoader = getClass().getClassLoader();
+	static List<MyComponent> list = new ArrayList<>();
 	Toolkit kit = Toolkit.getDefaultToolkit();
 	Image imC = kit.getImage(classLoader.getResource("original.png"));
 	Image imbg = kit.getImage(classLoader.getResource("background.png"));
@@ -36,12 +38,12 @@ public class showGame extends JFrame {
 
 	int whereX;
 	int whereY;
-	private JPanel contentPane;
+	private JPanel contentPnl;
 	private JLabel characterIng;
 	private Timer timer; // 배경 타이머
 	private Timer timerJ; // 젤리 타이머
 	private int x;
-	final int BLACK = -16777216;
+	static final int BLACK = -16777216;
 	private Jelly jellyS;
 	private int frameX;
 
@@ -62,104 +64,115 @@ public class showGame extends JFrame {
 	}
 
 	public void grapPix() throws IOException {
-
 		BufferedImage img = ImageIO.read(showGame.class.getClassLoader().getResource("step.jpg"));
 		for (int i = 0; i < img.getWidth(); i++) {
 			int rgb = img.getRGB(i, img.getHeight() - 1);
-
 			if (rgb == BLACK) { // 검정색 이라면?
-//				System.out.println("발판");
-				MyComponent compo = new MyComponent();
+				new MyComponent(); // 발판만들기
 				compo.setBounds(i * 60, 347, 60, 60);
-				contentPane.add(compo); /// 추가하고보이게
+				getContentPane().add(compo); /// 추가하고보이게
+				list.add(compo);
 			} else {
-//				System.out.println("발판아님");
 			}
 
 		}
 
 	}
 
+//	타이머로 발판 움직이기
+	public void steptimer() {
+		Timer step = new Timer(1000, new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				for (MyComponent j : list) {
+					j.setLocation(j.getX() - 10, j.getY());
+				}
+
+			}
+		});
+		step.start();
+
+	}
+
 	public showGame() {
+		contentPnl = new JPanel();
+		setContentPane(contentPnl);
+		contentPnl.setBorder(new EmptyBorder(5, 5, 5, 5));
+		contentPnl.setLayout(null);
 
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 701, 437);
-		contentPane = new JPanel();
-		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		setContentPane(contentPane);
-		contentPane.setLayout(null);
 
 		Obstacle ob = new Obstacle(500, 300, 50, 50);
 		ob.setBounds(ob.getX(), ob.getY(), 100, 100);
 
-		JLabel lbl_picture = new JLabel("ㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋ");
+		JLabel lbl_picture = new JLabel("짱구야 오늘도 달려보자앗 ~");
 		lbl_picture.setBackground(Color.LIGHT_GRAY);
 		lbl_picture.setBounds(12, 10, 661, 112);
 		lbl_picture.setVisible(true);
-		contentPane.add(lbl_picture);
-		
+		contentPnl.add(lbl_picture);
+
 		JPanel resultPanel = new JPanel();
-		resultPanel.setBackground(new Color(0,0,25,25));
+		resultPanel.setBackground(new Color(0, 0, 25, 25));
 		resultPanel.setBounds(134, 62, 446, 253);
-		contentPane.add(resultPanel);
+		contentPnl.add(resultPanel);
 		resultPanel.setVisible(false);
 		resultPanel.setLayout(null);
-		
+
 		JLabel lbl_gameResult = new JLabel("게임결과");
 		lbl_gameResult.setFont(new Font("맑은 고딕", Font.BOLD, 20));
 		lbl_gameResult.setBounds(167, 10, 107, 43);
 		lbl_gameResult.setHorizontalAlignment(JLabel.CENTER);
 		resultPanel.add(lbl_gameResult);
-		
+
 		JLabel lbl_nickname = new JLabel("닉네임 :");
 		lbl_nickname.setFont(new Font("맑은 고딕", Font.BOLD, 13));
 		lbl_nickname.setBounds(12, 65, 57, 25);
 		lbl_nickname.setHorizontalAlignment(JLabel.RIGHT);
 		resultPanel.add(lbl_nickname);
-		
+
 		JLabel lbl_nicknameA = new JLabel("짱구");
 		lbl_nicknameA.setFont(new Font("맑은 고딕", Font.BOLD, 13));
 		lbl_nicknameA.setBounds(80, 65, 57, 25);
 		lbl_nicknameA.setHorizontalAlignment(JLabel.LEFT);
 		resultPanel.add(lbl_nicknameA);
-		
+
 		JLabel lbl_score = new JLabel("점수 :");
 		lbl_score.setFont(new Font("맑은 고딕", Font.BOLD, 13));
 		lbl_score.setBounds(12, 100, 57, 25);
 		lbl_score.setHorizontalAlignment(JLabel.RIGHT);
 		resultPanel.add(lbl_score);
-		
+
 		JLabel lbl_scoreA = new JLabel("100000점");
 		lbl_scoreA.setFont(new Font("맑은 고딕", Font.BOLD, 13));
 		lbl_scoreA.setBounds(80, 100, 67, 25);
 		lbl_scoreA.setHorizontalAlignment(JLabel.CENTER);
 		resultPanel.add(lbl_scoreA);
-		
+
 		JLabel lbl_random = new JLabel("○○○ :");
 		lbl_random.setHorizontalAlignment(SwingConstants.RIGHT);
 		lbl_random.setFont(new Font("맑은 고딕", Font.BOLD, 13));
 		lbl_random.setBounds(12, 135, 57, 25);
 		resultPanel.add(lbl_random);
-		
+
 		JLabel lbl_randomA = new JLabel("○○○");
 		lbl_randomA.setHorizontalAlignment(SwingConstants.LEFT);
 		lbl_randomA.setFont(new Font("맑은 고딕", Font.BOLD, 13));
 		lbl_randomA.setBounds(80, 135, 67, 25);
 		resultPanel.add(lbl_randomA);
-		
+
 		JLabel lbl_random_B = new JLabel("○○○ :");
 		lbl_random_B.setHorizontalAlignment(SwingConstants.RIGHT);
 		lbl_random_B.setFont(new Font("맑은 고딕", Font.BOLD, 13));
 		lbl_random_B.setBounds(12, 170, 57, 25);
 		resultPanel.add(lbl_random_B);
-		
+
 		JLabel lbl_randomD = new JLabel("○○○");
 		lbl_randomD.setHorizontalAlignment(SwingConstants.LEFT);
 		lbl_randomD.setFont(new Font("맑은 고딕", Font.BOLD, 13));
 		lbl_randomD.setBounds(80, 170, 67, 25);
 		resultPanel.add(lbl_randomD);
-		
-		
+
 		JLabel bgIng = new JLabel(""); // 배경
 		bgIng.setIcon(new ImageIcon(imbg));
 		bgIng.setBounds(0, 0, 100000, 400);
@@ -195,10 +208,10 @@ public class showGame extends JFrame {
 //		jIng.setBounds(jellyS.getJellyX(), jellyS.getJellyY(), 50, 50);
 
 		Jellyy jellyy = new Jellyy();
-		jellyy.makeJellyy(contentPane);
-		
+		jellyy.makeJellyy(contentPnl);
+
 		frameX = 670;
-		
+
 		timerJ = new Timer(48, new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -207,9 +220,9 @@ public class showGame extends JFrame {
 					jellyy.getJellys()[i].setLocation(frameX, jellyy.getY(jellyy.getJellys()[i]));
 				}
 				if (frameX <= 120) {
-					jellyy.deleteJellyy(contentPane);
+					jellyy.deleteJellyy(contentPnl);
 				}
-				
+
 			}
 		});
 		timerJ.start();
@@ -221,7 +234,6 @@ public class showGame extends JFrame {
 		characterIng.setBounds(whereX, whereY, 100, 100);
 		characterIng.addKeyListener(new KeyListener() {
 			private int count = 0;
-			
 
 			@Override
 			public void keyTyped(KeyEvent e) {
@@ -267,17 +279,9 @@ public class showGame extends JFrame {
 			e1.printStackTrace();
 		}
 		characterIng.setIcon(new ImageIcon(imC));
-		contentPane.add(ob);
-		contentPane.add(characterIng);
-		contentPane.add(bgIng);
-	}
-
-	class MyComponent extends JComponent {
-		public void paintComponent(Graphics g) {
-			g.setColor(Color.black);
-			g.fillRect(0, 0, 60, 60);
-			g.dispose();
-		}
+		contentPnl.add(ob);
+		contentPnl.add(characterIng);
+		contentPnl.add(bgIng);
 	}
 
 }

@@ -184,7 +184,7 @@ public class showGame extends JFrame {
 		Timer timer2 = new Timer(3000, new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				System.out.println("11");
+				//System.out.println("11");
 				lbl_picture.setVisible(false);
 			}
 		});

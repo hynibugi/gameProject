@@ -150,20 +150,7 @@ public class Rank extends JFrame {
 		
 		//--------------------------------------------------------------------
 		
-		JButton btn_back = new JButton("뒤로가기");
-		btn_back.setFont(new Font("맑은 고딕", Font.BOLD, 13));
-		btn_back.setBounds(400, 10, 97, 23);
-		btn_back.setBorder(null);
-		btn_back.setBackground(Color.WHITE);
-		btn_back.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				new Menu().showGUI();
-				dispose();
-			}
-		});
-		contentPane.add(btn_back);
+		
 		
 		JLabel lbl_rank = new JLabel("순위");
 		lbl_rank.setFont(new Font("맑은 고딕", Font.BOLD, 13));

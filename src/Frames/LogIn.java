@@ -42,11 +42,10 @@ public class LogIn extends JFrame {
 		});
 	}
 	
-	
-	public String getMyId() {
-		return infoField[0].getText();
-	}
 
+	public String getMyId() {
+		return myId;
+	}
 
 	public LogIn() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -99,8 +98,10 @@ public class LogIn extends JFrame {
 				int result = ur.login(inputId, inputPw);
 				
 				if (result == 1) {
-					new Menu().showGUI();
+					new Menu(LogIn.this).showGUI();
+					myId = inputId;
 					System.out.println("로그인 성공");
+					System.out.println(myId);
 				} else {
 					System.out.println("로그인 실패");
 				}

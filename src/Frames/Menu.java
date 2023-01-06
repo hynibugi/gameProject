@@ -14,6 +14,8 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import info.UserinfoRepositoryImpl;
+
 public class Menu extends JFrame {
 
 	private JLabel contentPane;
@@ -21,26 +23,13 @@ public class Menu extends JFrame {
 	Toolkit kit = Toolkit.getDefaultToolkit();
 	Image munuImage = kit.getImage(classLoader.getResource("menu.png"));
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					Menu frame = new Menu();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+
 
 	/**
 	 * Create the frame.
+	 * @param logIn 
 	 */
-	public Menu() {
+	public Menu(LogIn logIn) {
 	//	setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 500, 400);
 		contentPane = new JLabel();
@@ -68,6 +57,9 @@ public class Menu extends JFrame {
 		});
 		contentPane.add(btn_gameStart);
 		
+		UserinfoRepositoryImpl ur = new UserinfoRepositoryImpl();		
+		
+		
 		JButton btn_Shop = new JButton("상점");
 		btn_Shop.setFont(new Font("맑은 고딕", Font.BOLD, 15));
 		btn_Shop.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -77,8 +69,15 @@ public class Menu extends JFrame {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				new shop().showGUI();
-				//dispose();
+				
+				String inputId = logIn.getMyId();
+				String myMoney = String.valueOf(ur.countMoney(inputId));
+				System.out.println(inputId);
+				System.out.println(myMoney);
+				shop sh = new shop(); 
+				sh.showMoney(myMoney);
+				sh.showGUI();
+				
 			}
 		});
 		contentPane.add(btn_Shop);

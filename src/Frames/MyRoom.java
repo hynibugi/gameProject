@@ -54,20 +54,6 @@ public class MyRoom extends JFrame {
 		panel.setBounds(462, 43, -257, 308);
 		contentPane.add(panel);
 		
-		JButton btn_back = new JButton("뒤로가기");
-		btn_back.setBounds(375, 10, 97, 23);
-		btn_back.setFont(new Font("맑은 고딕", Font.BOLD, 12));
-		btn_back.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				new Menu().showGUI();
-				dispose();
-				
-			}
-		});
-		contentPane.add(btn_back);
-		
 		JLabel lbl_characterA = new JLabel("캐릭터");
 		lbl_characterA.setBounds(217, 43, 110, 120);
 		contentPane.add(lbl_characterA);

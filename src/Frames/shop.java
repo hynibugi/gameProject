@@ -8,6 +8,7 @@ import java.awt.Toolkit;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.SwingConstants;
 
 import info.UserinfoRepositoryImpl;
 
@@ -19,6 +20,9 @@ public class shop extends JFrame {
 	Image shopImage = kit.getImage(classLoader.getResource("shop.png"));
 	
 	private JLabel[] price = new JLabel[3];
+	private JLabel myMoney;
+	
+	
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -56,11 +60,15 @@ public class shop extends JFrame {
 		String inputId = lg.getMyId();
 		String money = String.valueOf(ur.countMoney(inputId));
 		
-		JLabel myMoney = new JLabel(money);
+		myMoney = new JLabel(money + " 원");
 		myMoney.setFont(new Font("맑은 고딕", Font.BOLD, 15));
-		myMoney.setBounds(12, 10, 57, 23);
+		myMoney.setHorizontalAlignment(SwingConstants.RIGHT);
+		myMoney.setBounds(150, 22, 60, 23);
 		contentPane.add(myMoney);
 		
+	}
+	public void showMoney(String money) {
+		myMoney.setText(money + "원");
 	}
 	public void showGUI() {
 		setVisible(true);

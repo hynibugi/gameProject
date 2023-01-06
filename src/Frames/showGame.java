@@ -64,36 +64,34 @@ public class showGame extends JFrame {
 	}
 
 	public void grapPix() throws IOException {
-		BufferedImage img = ImageIO.read(showGame.class.getClassLoader().getResource("step.jpg"));
+		BufferedImage img = ImageIO.read(showGame.class.getClassLoader().getResource("steps.png"));
 		for (int i = 0; i < img.getWidth(); i++) {
 			int rgb = img.getRGB(i, img.getHeight() - 1);
 			if (rgb == BLACK) { // 검정색 이라면?
 				compo = new MyComponent(); // 발판만들기
-				list.add(compo); //리스트에 발판추가
-				compo.setBounds(i * 60, 349, 60, 60); //범위설정
+				list.add(compo); // 리스트에 발판추가
+				compo.setBounds(i * 15, 349, 60, 60); // 범위설정
+				
 				getContentPane().add(compo); /// 컴포넌트에 추가하고보이게
 
 			} else {
-				//아니면 아무수행 하지않음
+				// 아니면 아무수행 하지않음
 			}
 
 		}
-		System.out.println(list.get(1)); //list에 값 담겨있음
-		Timer step = new Timer(10, new ActionListener() { //타이머 1초마다움직이게함
+		System.out.println(list.get(1)); // list에 값 담겨있음
+		Timer step = new Timer(10, new ActionListener() { // 타이머 1초마다움직이게함
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				for (MyComponent j : list) {
-					j.setLocation(j.getX() - 10, j.getY()); //x값-10하기
+					j.setLocation(j.getX() - 10, j.getY()); // x값-10하기
 				}
 
 			}
 		});
-		step.start(); //타이머시작
-		//왜안돼?
+		step.start(); // 타이머시작
 
 	}
-
-//   타이머로 발판 움직이기
 
 	public showGame() {
 		contentPnl = new JPanel();

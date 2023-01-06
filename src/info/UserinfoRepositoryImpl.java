@@ -66,4 +66,25 @@ public class UserinfoRepositoryImpl implements UserinfoRepository {
 		}
 	}
 
+	
+	@Override
+	public int login(String inputId, String inputPassword) {
+		String sql = "SELECT count(*) FROM project_game.user where id = ? and password = ?";
+		try (Connection conn = ConnectionProvider.makeConnection();
+				PreparedStatement stmt = conn.prepareStatement(sql)) {
+			stmt.setString(1, inputId);
+			stmt.setString(2, inputPassword);
+			
+			try (ResultSet rs = stmt.executeQuery()) {
+				if (rs.next()) {
+					return rs.getInt(1);
+				}
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			throw new DataIOException(e);
+		}
+		return 0;
+	}
+
 }

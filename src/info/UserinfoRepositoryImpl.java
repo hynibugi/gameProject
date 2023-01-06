@@ -87,4 +87,22 @@ public class UserinfoRepositoryImpl implements UserinfoRepository {
 		return 0;
 	}
 
+	@Override
+	public int countMoney(String inputId) {
+		String sql = "SELECT money FROM project_game.user where id = ?";
+		try (Connection conn = ConnectionProvider.makeConnection();
+				PreparedStatement stmt = conn.prepareStatement(sql)) {
+			stmt.setString(1, inputId);
+			
+			try (ResultSet rs = stmt.executeQuery()) {
+				if (rs.next()) {
+					return rs.getInt(1);
+				}
+			}
+		} catch (SQLException e) {
+			throw new DataIOException(e);
+		}
+		return -1;
+	}
+
 }

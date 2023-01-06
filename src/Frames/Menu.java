@@ -62,7 +62,7 @@ public class Menu extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				new showGame().setVisible(true);
-				dispose();
+				//dispose();
 				
 			}
 		});
@@ -78,8 +78,7 @@ public class Menu extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				new shop().showGUI();
-				dispose();
-				
+				//dispose();
 			}
 		});
 		contentPane.add(btn_Shop);
@@ -94,7 +93,7 @@ public class Menu extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				new Rank().showGUI();
-				dispose();
+				//dispose();
 				
 			}
 		});
@@ -110,7 +109,7 @@ public class Menu extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				new MyRoom().showGUI();
-				dispose();
+				//dispose();
 				
 			}
 		});

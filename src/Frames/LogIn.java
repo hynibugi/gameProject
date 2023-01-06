@@ -21,6 +21,7 @@ public class LogIn extends JFrame {
 	Toolkit kit = Toolkit.getDefaultToolkit();
 	Image mainLogin = kit.getImage(classLoader.getResource("mainLogIn.png"));
 	
+	private String myId;
 	private JLabel contentPane;
 	private JLabel[] infoTitle = new JLabel[2];
 	private String[] infoTitles = {"아이디", "비밀번호"};
@@ -40,6 +41,12 @@ public class LogIn extends JFrame {
 			}
 		});
 	}
+	
+	
+	public String getMyId() {
+		return infoField[0].getText();
+	}
+
 
 	public LogIn() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

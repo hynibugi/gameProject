@@ -71,7 +71,7 @@ public class showGame extends JFrame {
 				compo = new MyComponent(); // 발판만들기
 				list.add(compo); // 리스트에 발판추가
 				compo.setBounds(i * 15, 349, 60, 60); // 범위설정
-				
+
 				getContentPane().add(compo); /// 컴포넌트에 추가하고보이게
 
 			} else {
@@ -80,7 +80,7 @@ public class showGame extends JFrame {
 
 		}
 		System.out.println(list.get(1)); // list에 값 담겨있음
-		Timer step = new Timer(10, new ActionListener() { // 타이머 1초마다움직이게함
+		Timer step = new Timer(10, new ActionListener() { // 이동속도 변경
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				for (MyComponent j : list) {
@@ -90,6 +90,10 @@ public class showGame extends JFrame {
 			}
 		});
 		step.start(); // 타이머시작
+
+	}
+
+	public void showJelly() {
 
 	}
 

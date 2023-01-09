@@ -39,6 +39,9 @@ public class Obstacle extends JComponent {
 		this.hitbox = new Rectangle(x, y, width, height);
 	}
 
+	public Obstacle() {
+	}
+
 	// 장애물 위치이동
 	public void updatePosition(int dx, int dy) {
 		x += dx;
@@ -53,9 +56,8 @@ public class Obstacle extends JComponent {
 
 	@Override
 	protected void paintComponent(Graphics g) {
-//		super.paintComponent(g);
-		g.setColor(Color.black);
-		g.fillRect(0, 0, width, height);
+		g.setColor(Color.YELLOW);
+		g.fillRect(0, 0, 60, 60);
 		g.dispose();
 	}
 

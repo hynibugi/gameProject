@@ -5,7 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import conn.ConnectionProvider;
+import dbutil.ConnectionProvider;
 import exceptions.DataIOException;
 
 public class UserinfoRankingImpl implements UserinfoRanking {

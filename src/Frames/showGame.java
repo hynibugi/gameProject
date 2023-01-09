@@ -75,12 +75,12 @@ public class showGame extends JFrame {
 
 			if (ww == -1237980) {
 				huddle = new Huddle();
-				
+
 				huddlelist.add(huddle);
 				huddle.setBounds(i * 10, 320, 50, 50);
 				huddle.imageUpdate(pepper, i * 10, 320, 50, 40, 20);
 				getContentPane().add(huddle);
-				
+
 			}
 		}
 //
@@ -103,8 +103,8 @@ public class showGame extends JFrame {
 //			}
 //
 //		}
-
-		Timer step = new Timer(80, new ActionListener() { // 이동속도 변경
+		int a = 80;
+		Timer step = new Timer(a, new ActionListener() { // 이동속도 변경
 			@Override
 			public void actionPerformed(ActionEvent e) {
 //				for (MyComponent j : list) {
@@ -116,6 +116,7 @@ public class showGame extends JFrame {
 //
 //				}
 				for (Huddle j : huddlelist) {
+					
 					j.setLocation(j.getX() - 10, j.getY()); // x값-10하기
 
 				}

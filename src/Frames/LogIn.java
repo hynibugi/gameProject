@@ -1,4 +1,5 @@
 package Frames;
+
 import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.Font;
@@ -16,18 +17,18 @@ import javax.swing.JTextField;
 import info.UserinfoRepositoryImpl;
 
 public class LogIn extends JFrame {
-	
+
 	ClassLoader classLoader = getClass().getClassLoader();
 	Toolkit kit = Toolkit.getDefaultToolkit();
 	Image mainLogin = kit.getImage(classLoader.getResource("mainLogIn.png"));
-	
+
 	private String myId;
 	private JLabel contentPane;
 	private JLabel[] infoTitle = new JLabel[2];
-	private String[] infoTitles = {"아이디", "비밀번호"};
+	private String[] infoTitles = { "아이디", "비밀번호" };
 	private JTextField[] infoField = new JTextField[2];
 	private JButton[] jbts = new JButton[2];
-	private String[] jbtsTitles = {"회원가입", "로그인"};
+	private String[] jbtsTitles = { "회원가입", "로그인" };
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -41,7 +42,6 @@ public class LogIn extends JFrame {
 			}
 		});
 	}
-	
 
 	public String getMyId() {
 		return myId;
@@ -50,25 +50,25 @@ public class LogIn extends JFrame {
 	public LogIn() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 505, 405);
-		contentPane = new JLabel();		
+		contentPane = new JLabel();
 		contentPane.setBorder(null);
 		contentPane.setIcon(new ImageIcon(mainLogin));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
-		
-		for(int i = 0; i < infoTitle.length; i++) {
+
+		for (int i = 0; i < infoTitle.length; i++) {
 			infoTitle[i] = new JLabel(infoTitles[i]);
 			infoTitle[i].setFont(new Font("맑은 고딕", Font.BOLD, 16));
 			infoTitle[i].setBounds(123, 115 + i * 34, 68, 24);
 			contentPane.add(infoTitle[i]);
 		}
-		
-		for(int i = 0; i < infoField.length; i++) {
+
+		for (int i = 0; i < infoField.length; i++) {
 			infoField[i] = new JTextField(17);
 			infoField[i].setBounds(248, 117 + i * 34, 116, 21);
 			contentPane.add(infoField[i]);
 		}
-		
+
 		for (int i = 0; i < jbts.length; i++) {
 			jbts[i] = new JButton(jbtsTitles[i]);
 			jbts[i].setFont(new Font("맑은 고딕", Font.BOLD, 13));
@@ -77,26 +77,25 @@ public class LogIn extends JFrame {
 			jbts[i].setBackground(new Color(176, 232, 103));
 			contentPane.add(jbts[i]);
 		}
-		
-		jbts[0].addActionListener(new ActionListener() {		
+
+		jbts[0].addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				new SignUp().showGUI();
 			}
 		});
-		
+
 		UserinfoRepositoryImpl ur = new UserinfoRepositoryImpl();
-		
-		jbts[1].addActionListener(new ActionListener() {		
+
+		jbts[1].addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				
-				
+
 				String inputId = infoField[0].getText();
 				String inputPw = infoField[1].getText();
-				
+
 				int result = ur.login(inputId, inputPw);
-				
+
 				if (result == 1) {
 					new Menu(LogIn.this).showGUI();
 					myId = inputId;
@@ -105,10 +104,11 @@ public class LogIn extends JFrame {
 				} else {
 					System.out.println("로그인 실패");
 				}
-			}	
+			}
 		});
-		
+
 	}
+
 	public void showGUI() {
 		setVisible(true);
 	}

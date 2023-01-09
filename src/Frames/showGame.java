@@ -15,7 +15,6 @@ import java.util.List;
 
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
-import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -23,17 +22,21 @@ import javax.swing.SwingConstants;
 import javax.swing.Timer;
 import javax.swing.border.EmptyBorder;
 
-import gameObject.Jelly;
 import gameObject.Jellyy;
 import gameObject.Obstacle;
 
 public class showGame extends JFrame {
 	MyComponent compo = new MyComponent();
+	Huddle huddle = new Huddle();
+	Jelly jelly = new Jelly();
 	ClassLoader classLoader = getClass().getClassLoader();
 	List<MyComponent> list = new ArrayList<>();
+	List<Huddle> huddlelist = new ArrayList<>();
+	List<Jelly> jellylist = new ArrayList<>();
 	Toolkit kit = Toolkit.getDefaultToolkit();
 	Image imC = kit.getImage(classLoader.getResource("original.png"));
 	Image imbg = kit.getImage(classLoader.getResource("background.png"));
+	Image pepper = kit.getImage(classLoader.getResource("pepper.png"));
 //   Image jelly = kit.getImage(classLoader.getResource("jelly.png"));
 
 	int whereX;
@@ -44,7 +47,7 @@ public class showGame extends JFrame {
 	private Timer timerJ; // 젤리 타이머
 	private int x;
 	static final int BLACK = -16777216;
-	private Jelly jellyS;
+
 	private int frameX;
 
 	public int getWhereX() {
@@ -65,26 +68,56 @@ public class showGame extends JFrame {
 
 	public void grapPix() throws IOException {
 		BufferedImage img = ImageIO.read(showGame.class.getClassLoader().getResource("steps.png"));
+
 		for (int i = 0; i < img.getWidth(); i++) {
 			int rgb = img.getRGB(i, img.getHeight() - 1);
-			if (rgb == BLACK) { // 검정색 이라면?
-				compo = new MyComponent(); // 발판만들기
-				list.add(compo); // 리스트에 발판추가
-				compo.setBounds(i * 15, 349, 60, 60); // 범위설정
+			int ww = img.getRGB(i, img.getHeight() - 15);
 
-				getContentPane().add(compo); /// 컴포넌트에 추가하고보이게
-
-			} else {
-				// 아니면 아무수행 하지않음
+			if (ww == -1237980) {
+				huddle = new Huddle();
+				
+				huddlelist.add(huddle);
+				huddle.setBounds(i * 10, 320, 50, 50);
+				huddle.imageUpdate(pepper, i * 10, 320, 50, 40, 20);
+				getContentPane().add(huddle);
+				
 			}
-
 		}
-		System.out.println(list.get(1)); // list에 값 담겨있음
-		Timer step = new Timer(10, new ActionListener() { // 이동속도 변경
+//
+//			if (ww == -3584) {
+//				jelly = new Jelly();
+//				jellylist.add(jelly);
+//				jelly.setBounds(i * 15, 280, 60, 60);
+//				getContentPane().add(jelly);
+//			}
+//
+//			if (rgb == BLACK) { // 검정색 이라면?
+//				compo = new MyComponent(); // 발판만들기
+//				list.add(compo); // 리스트에 발판추가
+//				compo.setBounds(i * 15, 349, 60, 60); // 범위설정
+//
+//				getContentPane().add(compo); /// 컴포넌트에 추가하고보이게
+//
+//			} else {
+//				// 아니면 아무수행 하지않음
+//			}
+//
+//		}
+
+		Timer step = new Timer(80, new ActionListener() { // 이동속도 변경
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				for (MyComponent j : list) {
+//				for (MyComponent j : list) {
+//					j.setLocation(j.getX() - 10, j.getY()); // x값-10하기
+//
+//				}
+//				for (Jelly j : jellylist) {
+//					j.setLocation(j.getX() - 10, j.getY()); // x값-10하기
+//
+//				}
+				for (Huddle j : huddlelist) {
 					j.setLocation(j.getX() - 10, j.getY()); // x값-10하기
+
 				}
 
 			}
@@ -103,7 +136,7 @@ public class showGame extends JFrame {
 		contentPnl.setBorder(new EmptyBorder(5, 5, 5, 5));
 		contentPnl.setLayout(null);
 
-		//setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 701, 437);
 
 		Obstacle ob = new Obstacle(500, 300, 50, 50);
@@ -180,10 +213,10 @@ public class showGame extends JFrame {
 		bgIng.setIcon(new ImageIcon(imbg));
 		bgIng.setBounds(0, 0, 100000, 400);
 		x = 0;
-		timer = new Timer(16, new ActionListener() {
+		timer = new Timer(25, new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				x -= 10;
+				x -= 4;
 				if (x <= -15700) {
 					timer.stop();
 					x = 0;

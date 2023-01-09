@@ -7,4 +7,6 @@ public interface UserinfoRepository {
 	int insert(String inputId, String inputPassword, String inputNickname);
 	
 	int login(String inputId, String inputPassword);
+	
+	int countMoney(String inputId);
 }

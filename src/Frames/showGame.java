@@ -103,7 +103,7 @@ public class showGame extends JFrame {
 		contentPnl.setBorder(new EmptyBorder(5, 5, 5, 5));
 		contentPnl.setLayout(null);
 
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		//setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 701, 437);
 
 		Obstacle ob = new Obstacle(500, 300, 50, 50);

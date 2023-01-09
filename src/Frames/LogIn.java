@@ -21,6 +21,7 @@ public class LogIn extends JFrame {
 	Toolkit kit = Toolkit.getDefaultToolkit();
 	Image mainLogin = kit.getImage(classLoader.getResource("mainLogIn.png"));
 	
+	private String myId;
 	private JLabel contentPane;
 	private JLabel[] infoTitle = new JLabel[2];
 	private String[] infoTitles = {"아이디", "비밀번호"};
@@ -39,6 +40,11 @@ public class LogIn extends JFrame {
 				}
 			}
 		});
+	}
+	
+
+	public String getMyId() {
+		return myId;
 	}
 
 	public LogIn() {
@@ -92,8 +98,10 @@ public class LogIn extends JFrame {
 				int result = ur.login(inputId, inputPw);
 				
 				if (result == 1) {
-					new Menu().showGUI();
+					new Menu(LogIn.this).showGUI();
+					myId = inputId;
 					System.out.println("로그인 성공");
+					System.out.println(myId);
 				} else {
 					System.out.println("로그인 실패");
 				}

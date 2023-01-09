@@ -5,7 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import dbutil.ConnectionProvider;
+import conn.ConnectionProvider;
 import exceptions.DataIOException;
 
 public class UserinfoRepositoryImpl implements UserinfoRepository {
@@ -85,6 +85,25 @@ public class UserinfoRepositoryImpl implements UserinfoRepository {
 			throw new DataIOException(e);
 		}
 		return 0;
+	}
+
+	@Override
+	public int countMoney(String inputId) {
+		String sql = "SELECT money FROM project_game.user where id = ?";
+		try (Connection conn = ConnectionProvider.makeConnection();
+				PreparedStatement stmt = conn.prepareStatement(sql)) {
+			stmt.setString(1, inputId);
+			
+			try (ResultSet rs = stmt.executeQuery()) {
+				if (rs.next()) {
+					return rs.getInt(1);
+				}
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new DataIOException(e);
+		}
+		return -1;
 	}
 
 }

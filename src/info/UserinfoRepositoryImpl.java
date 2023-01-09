@@ -5,7 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import dbutil.ConnectionProvider;
+import conn.ConnectionProvider;
 import exceptions.DataIOException;
 
 public class UserinfoRepositoryImpl implements UserinfoRepository {

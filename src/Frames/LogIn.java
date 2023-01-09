@@ -107,7 +107,6 @@ public class LogIn extends JFrame {
 				}
 			}	
 		});
-		
 	}
 	public void showGUI() {
 		setVisible(true);

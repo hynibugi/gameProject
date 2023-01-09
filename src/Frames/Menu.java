@@ -23,14 +23,8 @@ public class Menu extends JFrame {
 	Toolkit kit = Toolkit.getDefaultToolkit();
 	Image munuImage = kit.getImage(classLoader.getResource("menu.png"));
 
-
-
-	/**
-	 * Create the frame.
-	 * @param logIn 
-	 */
 	public Menu(LogIn logIn) {
-	//	setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
 		setBounds(100, 100, 500, 400);
 		contentPane = new JLabel();
 		contentPane.setBorder(null);

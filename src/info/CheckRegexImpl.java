@@ -19,7 +19,7 @@ public class CheckRegexImpl implements CheckRegex {
 
 	@Override
 	public int checkPwByRegex(String line) {
-		Pattern p = Pattern.compile("\\w{1,6}");
+		Pattern p = Pattern.compile("[a-z0-9]{1,16}");
 		Matcher m = p.matcher(line);
 		
 		if (m.matches()) {

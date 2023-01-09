@@ -21,11 +21,11 @@ public class Rank extends JFrame {
 	ClassLoader classLoader = getClass().getClassLoader();
 	Toolkit kit = Toolkit.getDefaultToolkit();
 	
-	Image c1 = kit.getImage(classLoader.getResource("c1.png"));
-	Image c2 = kit.getImage(classLoader.getResource("c2.png"));
-	Image c3 = kit.getImage(classLoader.getResource("c3.png"));
-	Image c4 = kit.getImage(classLoader.getResource("c4.png"));
-	Image c5 = kit.getImage(classLoader.getResource("c5.png"));
+	Image c1 = kit.getImage(classLoader.getResource("c1.png")); //짱구
+	Image c2 = kit.getImage(classLoader.getResource("c4.png")); //훈이
+	Image c3 = kit.getImage(classLoader.getResource("c2.png")); //철수
+	Image c4 = kit.getImage(classLoader.getResource("c5.png")); //유리
+	Image c5 = kit.getImage(classLoader.getResource("c3.png")); //맹구
 	
 	final Image[] imageC = {c1, c2, c3, c4, c5};
 	
@@ -39,26 +39,6 @@ public class Rank extends JFrame {
 	private JLabel[] whoScore = new JLabel[5];
 	private JLabel[] whoCharacter = new JLabel[5];
 	
-
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					Rank frame = new Rank();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
-	/**
-	 * Create the frame.
-	 */
 	public Rank() {
 		//setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 500, 420);
@@ -81,7 +61,7 @@ public class Rank extends JFrame {
 		int bestCha = uRank.getBestcharacter(1);
 		
 		JLabel lbl_characterA = new JLabel("");
-		lbl_characterA.setIcon(new ImageIcon(imageC[bestCha]));
+		lbl_characterA.setIcon(new ImageIcon(imageC[bestCha - 1]));
 		lbl_characterA.setBounds(39, 10, 57, 51);
 		panel.add(lbl_characterA);
 		
@@ -150,12 +130,11 @@ public class Rank extends JFrame {
 		
 		//--------------------------------------------------------------------
 		
-		
-		
 		JLabel lbl_rank = new JLabel("순위");
 		lbl_rank.setFont(new Font("맑은 고딕", Font.BOLD, 13));
 		lbl_rank.setBounds(12, 10, 75, 23);
 		contentPane.add(lbl_rank);
+		
 	}
 	public void showGUI() {
 		setVisible(true);

@@ -60,7 +60,7 @@ public class SignUp extends JFrame implements KeyListener {
 		infoID.setBounds(45, 85, 200, 21);
 		contentPane.add(infoID);
 		
-		JLabel infoPW = new JLabel("(영대소문자 및 숫자 16자 이하)");
+		JLabel infoPW = new JLabel("(영소문자 및 숫자 16자 이하)");
 		infoPW.setFont(new Font("맑은 고딕", Font.BOLD, 11));
 		infoPW.setBounds(45, 140, 200, 21);
 		contentPane.add(infoPW);
@@ -163,8 +163,12 @@ public class SignUp extends JFrame implements KeyListener {
 				
 				if (signUpResult) {
 					int result = ur.insert(inputId, inputPassword, inputNickname);
+					int lastNo = ur.lastNo();
+					int standardCharacter = ur.standardCharacter(lastNo);
 					new SuccessSignUp().showGUI();
 					System.out.println(result + "명 회원가입 성공");
+					System.out.println(lastNo + " : 마지막 회원가입 No");
+					System.out.println(standardCharacter + ": 마지막 가입자 캐릭터 부여");
 				} else {
 					System.out.println("실패");
 				}

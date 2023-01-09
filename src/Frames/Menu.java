@@ -74,7 +74,7 @@ public class Menu extends JFrame {
 				String myMoney = String.valueOf(ur.countMoney(inputId));
 				System.out.println(inputId);
 				System.out.println(myMoney);
-				shop sh = new shop(); 
+				shop sh = new shop(logIn); 
 				sh.showMoney(myMoney);
 				sh.showGUI();
 				

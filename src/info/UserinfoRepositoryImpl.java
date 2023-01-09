@@ -49,9 +49,10 @@ public class UserinfoRepositoryImpl implements UserinfoRepository {
 		return 0;
 	}
 
-	@Override
+	@Override //회원가입
 	public int insert(String inputId, String inputPassword, String inputNickname) {
 		String sql = "INSERT INTO project_game.user (id, password, nickname) values (?, ?, ?)";
+		
 		try (Connection conn = ConnectionProvider.makeConnection();
 				PreparedStatement stmt = conn.prepareStatement(sql)) {
 			stmt.setString(1, inputId);
@@ -64,6 +65,24 @@ public class UserinfoRepositoryImpl implements UserinfoRepository {
 			// TODO Auto-generated catch block
 			throw new DataIOException(e);
 		}
+	}
+	@Override
+	public int lastNo() {
+		String sqlLastNo = "SELECT no FROM project_game.user ORDER BY no desc limit 1;";
+		
+		try (Connection conn = ConnectionProvider.makeConnection();
+					PreparedStatement stmt2 = conn.prepareStatement(sqlLastNo)) {
+		
+			try (ResultSet rs2 = stmt2.executeQuery()) {
+				if (rs2.next()) {
+					return rs2.getInt(1);
+				}
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			throw new DataIOException(e);
+		}
+		return 0;
 	}
 
 	
@@ -99,6 +118,118 @@ public class UserinfoRepositoryImpl implements UserinfoRepository {
 					return rs.getInt(1);
 				}
 			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new DataIOException(e);
+		}
+		return -1;
+	}
+	
+	@Override
+	public int changeMoney(String inputId, int price) {
+		String sql = "UPDATE project_game.user SET money = money - ? WHERE id = ?";
+		try (Connection conn = ConnectionProvider.makeConnection();
+				PreparedStatement stmt = conn.prepareStatement(sql)) {
+				stmt.setInt(1, price);
+				stmt.setString(2, inputId);
+				return stmt.executeUpdate();				
+			} catch (SQLException e) {
+			e.printStackTrace();
+			throw new DataIOException(e);
+		}
+	}
+	
+	
+	@Override
+	public int buyCharacter(String inputId, int whatCharacter) {
+		String sql = "SELECT no FROM project_game.user WHERE ID = ?";
+		String sql2 = "UPDATE project_game.retainedcharacter SET have = 1 WHERE NO = ? AND WHO = ?";
+		int inputIdNo = 0;
+		try (Connection conn = ConnectionProvider.makeConnection();
+				PreparedStatement stmt = conn.prepareStatement(sql);
+						PreparedStatement stmt2 = conn.prepareStatement(sql2)) {
+			stmt.setString(1, inputId);
+			try (ResultSet rs = stmt.executeQuery()){
+				if (rs.next()) {
+					inputIdNo = rs.getInt(1);
+					stmt2.setInt(1, inputIdNo);
+					stmt2.setInt(2, whatCharacter);		
+						
+					return stmt2.executeUpdate();
+				}
+			}			
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new DataIOException(e);
+		}
+		return -1;
+	}
+
+	@Override
+	public int standardCharacter(int lastNo) {
+		String sql = "INSERT INTO project_game.retainedcharacter (no, who, have) values (?, 1, 1);";
+		String sql2 = "INSERT INTO project_game.retainedcharacter (no, who, have) values (?, 2, 0);";
+		String sql3 = "INSERT INTO project_game.retainedcharacter (no, who, have) values (?, 3, 0);";
+		String sql4 = "INSERT INTO project_game.retainedcharacter (no, who, have) values (?, 4, 0);";
+		String sql5 = "INSERT INTO project_game.retainedcharacter (no, who, have) values (?, 5, 0);";
+		try (Connection conn = ConnectionProvider.makeConnection();
+				PreparedStatement stmt = conn.prepareStatement(sql);
+					PreparedStatement stmt2 = conn.prepareStatement(sql2);
+						PreparedStatement stmt3 = conn.prepareStatement(sql3);
+							PreparedStatement stmt4 = conn.prepareStatement(sql4);
+								PreparedStatement stmt5 = conn.prepareStatement(sql5)) {
+			stmt.setInt(1, lastNo);
+			stmt2.setInt(1, lastNo);
+			stmt3.setInt(1, lastNo);
+			stmt4.setInt(1, lastNo);
+			stmt5.setInt(1, lastNo);
+			
+			stmt2.executeUpdate();
+			stmt3.executeUpdate();
+			stmt4.executeUpdate();
+			stmt5.executeUpdate();
+			
+			return stmt.executeUpdate();
+			
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			throw new DataIOException(e);
+		}
+	}
+
+	@Override
+	public int haveCharacter(int lastNo, int whatCharacter) {
+		String sql = "SELECT have FROM project_game.retainedcharacter where no = ? and who = ?";
+		try (Connection conn = ConnectionProvider.makeConnection();
+				PreparedStatement stmt = conn.prepareStatement(sql)) {
+			stmt.setInt(1, lastNo);
+			stmt.setInt(2, whatCharacter);
+			
+			try (ResultSet rs = stmt.executeQuery()) {
+				if (rs.next()) {
+					return rs.getInt(1);
+				}
+			}		
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new DataIOException(e);
+		}
+		return -1;
+	}
+
+	@Override
+	public int getMyNo(String inputId) {
+		String sql = "SELECT no FROM project_game.user where id = ?";
+		try (Connection conn = ConnectionProvider.makeConnection();
+				PreparedStatement stmt = conn.prepareStatement(sql)) {
+			stmt.setString(1, inputId);
+			
+			try (ResultSet rs = stmt.executeQuery()) {
+				if (rs.next()) {
+					return rs.getInt(1);
+				}
+			}		
 		} catch (SQLException e) {
 			e.printStackTrace();
 			throw new DataIOException(e);

@@ -57,6 +57,14 @@ public class showGame extends JFrame {
 	private Timer starTimer;
 	private Timer downTimer;
 
+	public int getScoreResult() {
+		return scoreResult;
+	}
+
+	public int getStarScore() {
+		return starScore;
+	}
+	
 	public int getWhereX() {
 		return whereX;
 	}

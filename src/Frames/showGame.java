@@ -39,11 +39,11 @@ public class showGame extends JFrame {
 	private JPanel contentPnl;
 	private JLabel characterIng;
 	private Timer timer; // 배경 타이머
-	private Timer timerJ; // 젤리 타이머
+
 	private int x;
 	static final int BLACK = -16777216;
+	private Timer step;
 
-	private int frameX;
 
 	public int getWhereX() {
 		return whereX;
@@ -62,35 +62,35 @@ public class showGame extends JFrame {
 	}
 
 	public void grapPix() throws IOException {
-		BufferedImage img = ImageIO.read(showGame.class.getClassLoader().getResource("steps.png"));
+		BufferedImage img = ImageIO.read(showGame.class.getClassLoader().getResource("huddle.png"));
 
 		for (int i = 0; i < img.getWidth(); i++) {
-			int rgb = img.getRGB(i, img.getHeight() - 1);
 			int ww = img.getRGB(i, img.getHeight() - 15);
-
-			if (ww == -1237980) {
-				huddle = new Huddle();
+		
+				if (ww == -1237980) {
 				
-				huddlelist.add(huddle);
-				huddle.setBounds(i * 10, 320, 50, 50);
-				huddle.imageUpdate(pepper, i * 10, 320, 50, 40, 20);
-				getContentPane().add(huddle);
 				
+					huddle = new Huddle();		
+					huddlelist.add(huddle);
+					huddle.setBounds(i * 10, 320, 50, 50);
+					huddle.imageUpdate(pepper, i * 10, 320, 50, 40, 20);
+					getContentPane().add(huddle);
+					
 			}
 		}
 
 
-		Timer step = new Timer(80, new ActionListener() { // 이동속도 변경
+		step = new Timer(80, new ActionListener() { // 이동속도 변경
 			@Override
 			public void actionPerformed(ActionEvent e) {
 
 				for (Huddle j : huddlelist) {
 					j.setLocation(j.getX() - 10, j.getY()); // x값-10하기
-					System.out.println(j.getY() - 60 + "//" + getWhereY());
-					if(j.getX() == getWhereX() && 220 == getWhereY()) {
+					if(j.getX() == 120 && 280 == getWhereY()) {
 						j.setVisible(false);
+						step.stop();
+						timer.stop();
 					}
-					
 				}
 			}
 		});
@@ -137,7 +137,7 @@ public class showGame extends JFrame {
 
 		characterIng = new JLabel(""); // 게임중인 캐릭터
 		whereX = 50;
-		whereY = 220;
+		whereY = 280;
 		characterIng.setFocusable(true);
 		characterIng.setBounds(whereX, whereY, 100, 100);
 		characterIng.addKeyListener(new KeyListener() {
@@ -163,13 +163,6 @@ public class showGame extends JFrame {
 						System.out.println("(x, y) = " + getWhereX() + ", " + getWhereY());
 					}
 
-					if (count == 2) {
-//                  System.out.println("2단점프");
-						whereY = 180;
-						characterIng.setBounds(whereX, whereY, 100, 100);
-						System.out.println("(x, y) = " + getWhereX() + ", " + getWhereY());
-						count--;
-					}
 				}
 				if (key == KeyEvent.VK_DOWN) {
 //               System.out.println("슬라이드");

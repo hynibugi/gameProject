@@ -178,11 +178,11 @@ public class showGame extends JFrame {
 					setWhereY(280);
 					characterIng.setBounds(whereX, whereY, 100, 100);
 					System.out.println("자동 내려오기");
-				} 
+				} else
+					down.stop();
 			}
 		});
 		down.start();
-		;
 
 		characterIng.setIcon(new ImageIcon(imC));
 		try {

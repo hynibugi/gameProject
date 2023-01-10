@@ -28,7 +28,7 @@ public class SignUp extends JFrame implements KeyListener {
 
 	private JLabel contentPane;
 	private String[] whatInfoTitle = { "아이디 (영소문자 및 숫자 8자 이하)", "비밀번호 (영소문자 및 숫자 16자 이하)", "비밀번호 재확인",
-			"닉네임 (한글 5자 이하)" };
+			"닉네임 (한글 및 영대소문자 5자 이하)" };
 	private JLabel[] whatInfo = new JLabel[whatInfoTitle.length];
 	private JLabel[] countResult = new JLabel[4];
 	private JTextField[] text_info = new JTextField[2];
@@ -49,7 +49,7 @@ public class SignUp extends JFrame implements KeyListener {
 	}
 
 	public SignUp() {
-		// setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		//setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 500, 600);
 
 		contentPane = new JLabel();
@@ -154,10 +154,12 @@ public class SignUp extends JFrame implements KeyListener {
 					int result = ur.insert(inputId, inputPassword, inputNickname);
 					int lastNo = ur.lastNo();
 					int standardCharacter = ur.standardCharacter(lastNo);
+					int standardRound = ur.stadardRound(lastNo);
 					new SuccessSignUp().showGUI();
 					System.out.println(result + "명 회원가입 성공");
 					System.out.println(lastNo + " : 마지막 회원가입 No");
 					System.out.println(standardCharacter + ": 마지막 가입자 캐릭터 부여");
+					System.out.println(standardRound + ": 마지막 가입자 라운드 부여");
 				} else {
 					System.out.println("실패");
 				}

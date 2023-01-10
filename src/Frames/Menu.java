@@ -44,7 +44,7 @@ public class Menu extends JFrame {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				new showGame().setVisible(true);
+				new showGame(logIn).setVisible(true);
 				//dispose();
 				
 			}

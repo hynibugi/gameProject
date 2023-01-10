@@ -8,6 +8,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -37,7 +39,7 @@ public class showGame extends JFrame {
 
 	int whereX;
 	int whereY;
-
+	private LogIn login;
 	private JPanel contentPnl;
 	private JLabel scoreImg;
 	private JLabel characterImg;
@@ -54,19 +56,6 @@ public class showGame extends JFrame {
 	private Timer huddleTimer;
 	private Timer starTimer;
 	private Timer downTimer;
-
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					showGame frame = new showGame();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
 
 	public int getWhereX() {
 		return whereX;
@@ -85,28 +74,26 @@ public class showGame extends JFrame {
 	}
 
 	public void grapPix() throws IOException {
+
 		BufferedImage img = ImageIO.read(showGame.class.getClassLoader().getResource("01.png"));
 
 		for (int i = 0; i < img.getWidth(); i++) {
-			int ww = img.getRGB(i, img.getHeight() - 11);
-
-			if (ww == -1237980) {
+			int red = img.getRGB(i, img.getHeight() - 11);
+			if (red == -1237980) {
 				Huddle huddle = new Huddle(pepper);
 				huddleList.add(huddle);
 				huddle.setBounds(i * 10, 320, 50, 50);
 				getContentPane().add(huddle);
-
 			}
 		}
 		for (int i = 0; i < img.getWidth(); i++) {
 			for (int j = 17; j < 25; j++) {
-				int ww = img.getRGB(i, img.getHeight() - j);
-				if (ww == -16777216) {
+				int black = img.getRGB(i, img.getHeight() - j);
+				if (black == -16777216) {
 					Huddle star = new Huddle(starImage);
 					starList.add(star);
 					star.setBounds(i * 10, 250, 50, 50);
 					getContentPane().add(star);
-
 				}
 			}
 		}
@@ -114,16 +101,18 @@ public class showGame extends JFrame {
 		huddleTimer = new Timer(80, new ActionListener() { // 이동속도 변경
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				for (Huddle j : huddleList) {
+				Iterator<Huddle> iter = huddleList.iterator();
+				while (iter.hasNext()) {
+					Huddle j = iter.next();
 					j.setLocation(j.getX() - 10, j.getY()); // x값-10하기
 					for (int i = 40; i < 84; i++) {
 						if (j.getX() == i && 280 == getWhereY()) {
 							if (characterUp == false) {
 								j.setVisible(false);
-								huddleTimer.stop();
-								starTimer.stop();
-								backTimer.stop();
-								scoreTimer.stop();
+								iter.remove();
+								stopTimers();
+								GameOver game = new GameOver();
+								game.setVisible(true);
 							}
 						}
 					}
@@ -138,7 +127,6 @@ public class showGame extends JFrame {
 				Iterator<Huddle> iter = starList.iterator();
 				while (iter.hasNext()) {
 					Huddle j = iter.next();
-					// for (Huddle j : starList)
 					j.setLocation(j.getX() - 10, j.getY()); // x값-10하기
 					if (j.getX() >= 50 && j.getX() <= 130) {
 						if (j.getY() >= 180 && j.getY() <= 260) {
@@ -156,7 +144,27 @@ public class showGame extends JFrame {
 		starTimer.start(); // 타이머시작
 	}
 
-	public showGame() {
+	private void stopTimers() {
+		huddleTimer.stop();
+		starTimer.stop();
+		backTimer.stop();
+		scoreTimer.stop();
+	}
+
+	public showGame(LogIn logIn) {
+		this.login = login;
+		setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
+		
+		addWindowListener(new WindowAdapter() {
+			@Override
+			public void windowClosing(WindowEvent e) {
+				stopTimers();
+				huddleList = null;
+				starList = null;
+				dispose();
+			}
+		});
+		
 		contentPnl = new JPanel();
 		setContentPane(contentPnl);
 		contentPnl.setBorder(null);
@@ -174,7 +182,6 @@ public class showGame extends JFrame {
 				if (x <= -15700) {
 					backTimer.stop();
 					x = 0;
-					// resultPanel.setVisible(true);
 				} else {
 					bgIng.setLocation(x, 0);
 				}
@@ -193,7 +200,6 @@ public class showGame extends JFrame {
 			@Override
 			public void keyTyped(KeyEvent e) {
 			}
-
 			@Override
 			public void keyReleased(KeyEvent e) {
 			}

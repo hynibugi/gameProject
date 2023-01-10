@@ -21,9 +21,7 @@ public class GameOver extends JFrame {
 	Image retry = kit.getImage(classLoader.getResource("retry.png"));
 	private JPanel contentPane;
 
-	/**
-	 * Launch the application.
-	 */
+
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {

@@ -16,63 +16,88 @@ import java.awt.Color;
 public class manual extends JFrame {
 	ClassLoader classLoader = getClass().getClassLoader();
 	Toolkit kit = Toolkit.getDefaultToolkit();
-	Image keyboard = kit.getImage(classLoader.getResource("key.png"));
+	Image keyboard = kit.getImage(classLoader.getResource("keyboard.png"));
 	Image pepper = kit.getImage(classLoader.getResource("pepper.png"));
+	Image background = kit.getImage(classLoader.getResource("manual_background.jpg"));
+	Image star = kit.getImage(classLoader.getResource("star.png"));
 	private JPanel contentPane;
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					manual frame = new manual();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
-	/**
-	 * Create the frame.
-	 */
 	public manual() {
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	//	setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 505, 400);
 		contentPane = new JPanel();
 		contentPane.setBackground(Color.WHITE);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
-
-		JLabel lblNewLabel = new JLabel("\uC124\uBA85\uC11C");
-		lblNewLabel.setFont(new Font("맑은 고딕", Font.BOLD, 15));
-		lblNewLabel.setBounds(12, 10, 77, 53);
-		contentPane.add(lblNewLabel);
-
-		JLabel lblNewLabel_1 = new JLabel("New label");
-		lblNewLabel_1.setBounds(22, 73, 136, 90);
-		lblNewLabel_1.setIcon(new ImageIcon(keyboard));
-
-		contentPane.add(lblNewLabel_1);
-
-		JLabel lblNewLabel_2 = new JLabel(" : JUMP");
-		lblNewLabel_2.setFont(new Font("굴림", Font.BOLD, 15));
-		lblNewLabel_2.setBounds(131, 73, 65, 43);
-		contentPane.add(lblNewLabel_2);
-
-		JLabel lblNewLabel_1_1 = new JLabel("");
-		lblNewLabel_1_1.setBounds(321, 73, 65, 58);
-		lblNewLabel_1_1.setIcon(new ImageIcon(pepper));
-		contentPane.add(lblNewLabel_1_1);
-
-		JLabel lblNewLabel_2_1 = new JLabel("");
-		lblNewLabel_2_1.setFont(new Font("굴림", Font.BOLD, 15));
-		lblNewLabel_2_1.setBounds(301, 120, 91, 43);
-		contentPane.add(lblNewLabel_2_1);
+		
+		JLabel lbl_Star = new JLabel("을 획득하면 돈을 벌 수 있어요.");
+		lbl_Star.setFont(new Font("휴먼편지체", Font.PLAIN, 14));
+		lbl_Star.setBounds(115, 255, 224, 32);
+		lbl_Star.setIcon(new ImageIcon(star));
+		contentPane.add(lbl_Star);
+		
+		JLabel lbl_Tip = new JLabel("Tip!!");
+		lbl_Tip.setForeground(Color.RED);
+		lbl_Tip.setFont(new Font("휴먼편지체", Font.BOLD, 16));
+		lbl_Tip.setBounds(65, 258, 38, 26);
+		contentPane.add(lbl_Tip);
+		
+		JLabel lbl_Rule = new JLabel("Rule");
+		lbl_Rule.setFont(new Font("휴먼편지체", Font.BOLD, 20));
+		lbl_Rule.setBounds(12, 10, 49, 26);
+		contentPane.add(lbl_Rule);
+		
+		JLabel lbl_keyPad = new JLabel("New label");
+		lbl_keyPad.setBounds(55, 64, 136, 90);
+		lbl_keyPad.setIcon(new ImageIcon(keyboard));
+		
+		contentPane.add(lbl_keyPad);
+		
+		JLabel lbl_JUMP = new JLabel(" : JUMP");
+		lbl_JUMP.setFont(new Font("휴먼편지체", Font.BOLD, 15));
+		lbl_JUMP.setBounds(164, 64, 65, 43);
+		contentPane.add(lbl_JUMP);
+		
+		JLabel lbl_bro = new JLabel("");
+		lbl_bro.setBounds(346, 64, 55, 58);
+		lbl_bro.setIcon(new ImageIcon(pepper));
+		contentPane.add(lbl_bro);
+		
+		JLabel lbl_broName = new JLabel("방사능 브로콜리");
+		lbl_broName.setFont(new Font("휴먼편지체", Font.BOLD, 15));
+		lbl_broName.setBounds(327, 111, 98, 43);
+		contentPane.add(lbl_broName);
+		
+		JLabel lbl_A1 = new JLabel("떡잎마을은 부리부리 마왕(키링)으로 부터 마을이 오염되었습니다.");
+		lbl_A1.setFont(new Font("휴먼편지체", Font.PLAIN, 14));
+		lbl_A1.setBounds(55, 167, 397, 26);
+		contentPane.add(lbl_A1);
+		
+		JLabel lbl_A2 = new JLabel("생존법!");
+		lbl_A2.setFont(new Font("휴먼편지체", Font.BOLD, 14));
+		lbl_A2.setBounds(55, 200, 397, 26);
+		contentPane.add(lbl_A2);
+		
+		JLabel lbl_A3 = new JLabel("- 다가오는 방사능 브로콜리를 JUMP(↑)을 이용해 브로콜리 피하기!");
+		lbl_A3.setFont(new Font("휴먼편지체", Font.PLAIN, 14));
+		lbl_A3.setBounds(55, 229, 397, 26);
+		contentPane.add(lbl_A3);
+		
+		JLabel lbl_A4 = new JLabel("떡잎마을 방범대 친구들이 방사능 브로콜리를 피해 무사히 집에 도착");
+		lbl_A4.setFont(new Font("휴먼편지체", Font.PLAIN, 14));
+		lbl_A4.setBounds(55, 289, 397, 26);
+		contentPane.add(lbl_A4);
+		
+		JLabel lbl_A5 = new JLabel("할 수 있도록 힘내주세요.");
+		lbl_A5.setFont(new Font("휴먼편지체", Font.PLAIN, 14));
+		lbl_A5.setBounds(55, 313, 397, 26);
+		contentPane.add(lbl_A5);
+		
+		JLabel lbl_background = new JLabel("");
+		lbl_background.setBounds(0, 0, 489, 361);
+		lbl_background.setIcon(new ImageIcon(background));
+		contentPane.add(lbl_background);
 	}
 
 }

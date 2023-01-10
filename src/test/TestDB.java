@@ -19,7 +19,15 @@ public class TestDB {
 //		int myNo = repo.getMyNo("test1");
 //		System.out.println(myNo);
 		
-		int result = repo.changeMoney("test1", 2000);
-		System.out.println(result);
+//		int result = repo.changeMoney("test1", 2000);
+//		System.out.println(result);
+		
+//		int result = repo.findCharacte("asdf");
+//		System.out.println(result);
+		
+		
+//		int result = repo.findLastRound(2);
+//		System.out.println(result);
+		
 	}
 }

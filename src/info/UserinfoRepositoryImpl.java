@@ -5,7 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import dbutil.ConnectionProvider;
+import conn.ConnectionProvider;
 import exceptions.DataIOException;
 
 public class UserinfoRepositoryImpl implements UserinfoRepository {
@@ -253,6 +253,88 @@ public class UserinfoRepositoryImpl implements UserinfoRepository {
 			stmt.setInt(1, whatCharacter);
 			stmt.setInt(2, myNo);
 			return stmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new DataIOException(e);
+		}
+	}
+
+	@Override
+	public int findCharacte(String inputId) {
+		String sql = "SELECT gamecharacter FROM project_game.user WHERE ID = ?;";
+		
+		try (Connection conn = ConnectionProvider.makeConnection();
+				PreparedStatement stmt = conn.prepareStatement(sql)) {
+			stmt.setString(1, inputId);
+			
+			try (ResultSet rs = stmt.executeQuery()) {
+				if (rs.next()) {
+					return rs.getInt(1);
+				}
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new DataIOException(e);
+		}
+		
+		return 0;
+	}
+
+	@Override
+	public int findLastRound(int myNo) {
+		String sql ="SELECT round FROM project_game.userscore WHERE no = ?";
+		
+		try (Connection conn = ConnectionProvider.makeConnection();
+				PreparedStatement stmt = conn.prepareStatement(sql)) {
+			
+			stmt.setInt(1, myNo);
+			
+			try (ResultSet rs = stmt.executeQuery()) {
+				if (rs.next()) {
+					return rs.getInt(1);
+				}
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new DataIOException(e);
+		}
+		
+		
+		return 0;
+	}
+
+	@Override
+	public int stadardRound(int lastNo) {
+		String sql = "INSERT INTO project_game.userscore (no, round, score, roundMoney, roundCharacter) values (?, 0, 0, 0, 1)";
+
+		try (Connection conn = ConnectionProvider.makeConnection();
+				PreparedStatement stmt = conn.prepareStatement(sql);) {
+			stmt.setInt(1, lastNo);
+
+			return stmt.executeUpdate();
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new DataIOException(e);
+		}
+	}
+
+	@Override
+	public int saveScore(int myNo, int lastRound, int score, int money, int myCharacter) {
+		String sql = "INSERT INTO project_game.userscore (no, round, score, roundMoney, roundCharacter) values (?, ?, ?, ?, ?)";
+
+		try (Connection conn = ConnectionProvider.makeConnection();
+				PreparedStatement stmt = conn.prepareStatement(sql);) {
+			stmt.setInt(1, myNo);
+			stmt.setInt(2, lastRound + 1);
+			stmt.setInt(3, score);
+			stmt.setInt(4, money);
+			stmt.setInt(5, myCharacter);
+
+			return stmt.executeUpdate();
+
 		} catch (SQLException e) {
 			e.printStackTrace();
 			throw new DataIOException(e);

@@ -31,7 +31,7 @@ public class CheckRegexImpl implements CheckRegex {
 
 	@Override
 	public int checkNnByRegex(String line) {
-		Pattern p = Pattern.compile("[ㄱ-힣]{1,6}");
+		Pattern p = Pattern.compile("[ㄱ-힣a-zA-Z]{1,6}");
 		Matcher m = p.matcher(line);
 		
 		if (m.matches()) {

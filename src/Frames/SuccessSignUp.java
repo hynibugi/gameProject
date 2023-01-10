@@ -54,6 +54,8 @@ public class SuccessSignUp extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				System.out.println("사용설명서 추가");
+				manual mn = new manual();
+				mn.setVisible(true);
 			}
 		});
 	}

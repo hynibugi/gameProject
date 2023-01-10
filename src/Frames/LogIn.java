@@ -27,8 +27,8 @@ public class LogIn extends JFrame {
 	private JLabel[] infoTitle = new JLabel[2];
 	private String[] infoTitles = { "아이디", "비밀번호" };
 	private JTextField[] infoField = new JTextField[2];
-	private JButton[] jbts = new JButton[2];
-	private String[] jbtsTitles = { "회원가입", "로그인" };
+	private JButton[] jbts = new JButton[3];
+	private String[] jbtsTitles = { "회원가입", "로그인", "메뉴얼" };
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -73,7 +73,7 @@ public class LogIn extends JFrame {
 			jbts[i] = new JButton(jbtsTitles[i]);
 			jbts[i].setFont(new Font("맑은 고딕", Font.BOLD, 13));
 			jbts[i].setBorder(null);
-			jbts[i].setBounds(122 + i * 142, 210, 97, 35);
+			jbts[i].setBounds(58 + i * 142, 210, 97, 35);
 			jbts[i].setBackground(new Color(176, 232, 103));
 			contentPane.add(jbts[i]);
 		}
@@ -107,6 +107,15 @@ public class LogIn extends JFrame {
 			}
 		});
 
+		
+		jbts[2].addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				manual mn = new manual();
+				mn.setVisible(true);
+			}
+				
+		});
 	}
 
 	public void showGUI() {

@@ -173,15 +173,12 @@ public class showGame extends JFrame {
 
 		down = new Timer(1000, new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-
 				if (whereY == 220) {
 					setWhereX(50);
 					setWhereY(280);
 					characterIng.setBounds(whereX, whereY, 100, 100);
 					System.out.println("자동 내려오기");
-				} else {
-					down.stop();
-				}
+				} 
 			}
 		});
 		down.start();

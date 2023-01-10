@@ -1,5 +1,6 @@
 package Frames;
 
+import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.Image;
 import java.awt.Toolkit;
@@ -10,6 +11,7 @@ import java.awt.event.KeyListener;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.imageio.ImageIO;
@@ -17,33 +19,54 @@ import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.SwingConstants;
 import javax.swing.Timer;
-import javax.swing.border.EmptyBorder;
 
 public class showGame extends JFrame {
 
-	Huddle huddle = new Huddle();
 	ClassLoader classLoader = getClass().getClassLoader();
-
-	List<Huddle> huddlelist = new ArrayList<>();
+	List<Huddle> huddleList = new ArrayList<>();
+	List<Huddle> starList = new ArrayList<>();
 	Toolkit kit = Toolkit.getDefaultToolkit();
-	Image imC = kit.getImage(classLoader.getResource("original.png"));
-	Image imbg = kit.getImage(classLoader.getResource("background.png"));
+	Image imstadardFirst = kit.getImage(classLoader.getResource("oneFirst.gif"));
+	Image imstadardSecond = kit.getImage(classLoader.getResource("oneSecond.gif"));
+	Image imgBg = kit.getImage(classLoader.getResource("background.png"));
+	Image imgScore = kit.getImage(classLoader.getResource("score.png"));
 	Image pepper = kit.getImage(classLoader.getResource("pepper.png"));
+	Image starImage = kit.getImage(classLoader.getResource("star.png"));
 
 	int whereX;
 	int whereY;
-	private JPanel contentPnl;
-	private JLabel characterIng;
-	private Timer score; // 점수 타이머
-	private int score1 = 0;
-	private JLabel lbl_score;
-	private Timer timer; // 배경 타이머
 
-	private int x;
+	private JPanel contentPnl;
+	private JLabel scoreImg;
+	private JLabel characterImg;
+	private Timer scoreTimer; // 점수 타이머
+	int scoreResult = 0;
+	int starScore = 0;
+	private JLabel lblMoney;
+	private JLabel lblScore;
+	private Timer backTimer; // 배경 타이머
+
+	private boolean characterUp = false;
+	private int x = 0;
 	static final int BLACK = -16777216;
-	private Timer step;
-	private Timer down;
+	private Timer huddleTimer;
+	private Timer starTimer;
+	private Timer downTimer;
+
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					showGame frame = new showGame();
+					frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
 
 	public int getWhereX() {
 		return whereX;
@@ -62,83 +85,110 @@ public class showGame extends JFrame {
 	}
 
 	public void grapPix() throws IOException {
-		BufferedImage img = ImageIO.read(showGame.class.getClassLoader().getResource("huddle.png"));
+		BufferedImage img = ImageIO.read(showGame.class.getClassLoader().getResource("01.png"));
 
 		for (int i = 0; i < img.getWidth(); i++) {
-
-			int ww = img.getRGB(i, img.getHeight() - 15);
+			int ww = img.getRGB(i, img.getHeight() - 11);
 
 			if (ww == -1237980) {
-
-				huddle = new Huddle();
-				huddlelist.add(huddle);
+				Huddle huddle = new Huddle(pepper);
+				huddleList.add(huddle);
 				huddle.setBounds(i * 10, 320, 50, 50);
-				huddle.imageUpdate(pepper, i * 10, 320, 50, 40, 20);
 				getContentPane().add(huddle);
 
 			}
 		}
-
-		step = new Timer(80, new ActionListener() { // 이동속도 변경
-			@Override
-			public void actionPerformed(ActionEvent e) {
-
-				for (Huddle j : huddlelist) {
-					j.setLocation(j.getX() - 10, j.getY()); // x값-10하기
-					if (j.getX() == 120 && 280 == getWhereY()) {
-						j.setVisible(false);
-						step.stop();
-						timer.stop();
-						score.stop();
-					}
+		for (int i = 0; i < img.getWidth(); i++) {
+			for (int j = 17; j < 25; j++) {
+				int ww = img.getRGB(i, img.getHeight() - j);
+				if (ww == -16777216) {
+					Huddle star = new Huddle(starImage);
+					starList.add(star);
+					star.setBounds(i * 10, 250, 50, 50);
+					getContentPane().add(star);
 
 				}
 			}
+		}
+
+		huddleTimer = new Timer(80, new ActionListener() { // 이동속도 변경
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				for (Huddle j : huddleList) {
+					j.setLocation(j.getX() - 10, j.getY()); // x값-10하기
+					for (int i = 40; i < 84; i++) {
+						if (j.getX() == i && 280 == getWhereY()) {
+							if (characterUp == false) {
+								j.setVisible(false);
+								huddleTimer.stop();
+								starTimer.stop();
+								backTimer.stop();
+								scoreTimer.stop();
+							}
+						}
+					}
+				}
+			}
 		});
-		step.start(); // 타이머시작
+		huddleTimer.start(); // 타이머시작
 
-	}
-
-	public void showJelly() {
-
+		starTimer = new Timer(80, new ActionListener() { // 이동속도 변경
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				Iterator<Huddle> iter = starList.iterator();
+				while (iter.hasNext()) {
+					Huddle j = iter.next();
+					// for (Huddle j : starList)
+					j.setLocation(j.getX() - 10, j.getY()); // x값-10하기
+					if (j.getX() >= 50 && j.getX() <= 130) {
+						if (j.getY() >= 180 && j.getY() <= 260) {
+							if (characterUp == true) {
+								j.setVisible(false);
+								iter.remove();
+								starScore += 10;
+								lblMoney.setText(String.valueOf(starScore));
+							}
+						}
+					}
+				}
+			}
+		});
+		starTimer.start(); // 타이머시작
 	}
 
 	public showGame() {
 		contentPnl = new JPanel();
 		setContentPane(contentPnl);
-		contentPnl.setBorder(new EmptyBorder(5, 5, 5, 5));
+		contentPnl.setBorder(null);
 		contentPnl.setLayout(null);
-
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 701, 437);
 
 		JLabel bgIng = new JLabel(""); // 배경
-		bgIng.setIcon(new ImageIcon(imbg));
+		bgIng.setIcon(new ImageIcon(imgBg));
 		bgIng.setBounds(0, 0, 100000, 400);
-		x = 0;
-		timer = new Timer(25, new ActionListener() {
+
+		backTimer = new Timer(25, new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				x -= 4;
 				if (x <= -15700) {
-					timer.stop();
+					backTimer.stop();
 					x = 0;
 					// resultPanel.setVisible(true);
 				} else {
 					bgIng.setLocation(x, 0);
-
 				}
 			}
 		});
-		timer.start();
+		backTimer.start();
 
-		characterIng = new JLabel(""); // 게임중인 캐릭터
+		characterImg = new JLabel(""); // 게임중인 캐릭터
 		whereX = 50;
 		whereY = 280;
-		characterIng.setFocusable(true);
-		characterIng.setBounds(whereX, whereY, 350, 153);
-		characterIng.addKeyListener(new KeyListener() {
-			private int count = 0;
+		characterImg.setFocusable(true);
+		characterImg.setIcon(new ImageIcon(imstadardFirst));
+		characterImg.setBounds(whereX, whereY, 90, 90);
+		characterImg.addKeyListener(new KeyListener() {
 
 			@Override
 			public void keyTyped(KeyEvent e) {
@@ -150,76 +200,69 @@ public class showGame extends JFrame {
 
 			@Override
 			public void keyPressed(KeyEvent e) {
-				int key = e.getKeyCode();
-
-				if (key == KeyEvent.VK_UP) {
+				downTimer.start();
+				if (e.getKeyCode() == KeyEvent.VK_UP) {
+					characterUp = true;
+					characterImg.setIcon(new ImageIcon(imstadardSecond));
 					whereY = 220;
-					characterIng.setBounds(whereX, whereY, 100, 100);
-					count++;
-					if (count == 1) {
-//                  System.out.println("1단점프");
-						System.out.println("(x, y) = " + getWhereX() + ", " + getWhereY());
-
-					}
-// 					자동내려오기
+					characterImg.setBounds(whereX, whereY, 90, 90);
 				}
-
-				if (key == KeyEvent.VK_DOWN) {
-//               System.out.println("슬라이드");
-					count = 0;
+				if (e.getKeyCode() == KeyEvent.VK_DOWN) {
+					characterUp = false;
+					characterImg.setIcon(new ImageIcon(imstadardFirst));
 					whereY = 280;
-					characterIng.setBounds(whereX, whereY, 100, 100);
-//               System.out.println("(x, y) = " + getWhereX() + ", " + getWhereY());
+					characterImg.setBounds(whereX, whereY, 90, 90);
 				}
 			}
 		});
 
-		down = new Timer(1000, new ActionListener() {
+		downTimer = new Timer(1200, new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (whereY == 220) {
 					setWhereX(50);
 					setWhereY(280);
-					characterIng.setBounds(whereX, whereY, 100, 100);
-					System.out.println("자동 내려오기");
-				} else {
-					down.stop();
+					characterUp = false;
+					characterImg.setIcon(new ImageIcon(imstadardFirst));
+					characterImg.setBounds(whereX, whereY, 90, 90);
+					downTimer.stop();
 				}
 			}
 		});
-		down.start();
-		;
 
-		characterIng.setIcon(new ImageIcon(imC));
 		try {
 			grapPix();
 		} catch (IOException e1) {
 			e1.printStackTrace();
 		}
 
-		lbl_score = new JLabel(String.valueOf(score1));
+		scoreImg = new JLabel();
+		scoreImg.setIcon(new ImageIcon(imgScore));
+		scoreImg.setBounds(20, 10, 500, 73);
 
-		lbl_score.setFont(new Font("맑은 고딕", Font.BOLD, 15));
-		lbl_score.setBounds(583, 10, 90, 31);
+		lblMoney = new JLabel(String.valueOf(scoreResult));
+		lblMoney.setBounds(240, 12, 50, 73);
+		lblMoney.setHorizontalAlignment(SwingConstants.RIGHT);
+		lblMoney.setFont(new Font("맑은 고딕", Font.BOLD, 22));
 
-		score1 = 0;
-		score = new Timer(1000, new ActionListener() {
+		lblScore = new JLabel(String.valueOf(scoreResult));
+		lblScore.setBounds(100, 12, 50, 73);
+		lblScore.setHorizontalAlignment(SwingConstants.RIGHT);
+		lblScore.setFont(new Font("맑은 고딕", Font.BOLD, 22));
+
+		scoreResult = 0;
+		scoreTimer = new Timer(1000, new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				System.out.println("10점씩 증가");
-				System.out.println(score1);
-				score1 += 10;
-
-				lbl_score.setText(String.valueOf(score1));
-
+				scoreResult += 10;
+				lblScore.setText(String.valueOf(scoreResult));
 			}
 		});
-		score.start();
-
-		contentPnl.add(lbl_score);
-		characterIng.setIcon(new ImageIcon(imC));
-		contentPnl.add(characterIng);
+		scoreTimer.start();
+		contentPnl.add(lblMoney);
+		contentPnl.add(lblScore);
+		contentPnl.add(scoreImg);
+		contentPnl.add(characterImg);
 		contentPnl.add(bgIng);
 
 	}
-
 }

@@ -22,7 +22,6 @@ import javax.swing.SwingConstants;
 import javax.swing.Timer;
 import javax.swing.border.EmptyBorder;
 
-
 public class showGame extends JFrame {
 	MyComponent compo = new MyComponent();
 	Huddle huddle = new Huddle();
@@ -43,7 +42,7 @@ public class showGame extends JFrame {
 	private int x;
 	static final int BLACK = -16777216;
 	private Timer step;
-
+	private Timer down;
 
 	public int getWhereX() {
 		return whereX;
@@ -66,19 +65,17 @@ public class showGame extends JFrame {
 
 		for (int i = 0; i < img.getWidth(); i++) {
 			int ww = img.getRGB(i, img.getHeight() - 15);
-		
-				if (ww == -1237980) {
-				
-				
-					huddle = new Huddle();		
-					huddlelist.add(huddle);
-					huddle.setBounds(i * 10, 320, 50, 50);
-					huddle.imageUpdate(pepper, i * 10, 320, 50, 40, 20);
-					getContentPane().add(huddle);
-					
+
+			if (ww == -1237980) {
+
+				huddle = new Huddle();
+				huddlelist.add(huddle);
+				huddle.setBounds(i * 10, 320, 50, 50);
+				huddle.imageUpdate(pepper, i * 10, 320, 50, 40, 20);
+				getContentPane().add(huddle);
+
 			}
 		}
-
 
 		step = new Timer(80, new ActionListener() { // 이동속도 변경
 			@Override
@@ -86,11 +83,12 @@ public class showGame extends JFrame {
 
 				for (Huddle j : huddlelist) {
 					j.setLocation(j.getX() - 10, j.getY()); // x값-10하기
-					if(j.getX() == 120 && 280 == getWhereY()) {
+					if (j.getX() == 120 && 280 == getWhereY()) {
 						j.setVisible(false);
 						step.stop();
 						timer.stop();
 					}
+
 				}
 			}
 		});
@@ -111,9 +109,6 @@ public class showGame extends JFrame {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 701, 437);
 
-
-
-
 		JLabel bgIng = new JLabel(""); // 배경
 		bgIng.setIcon(new ImageIcon(imbg));
 		bgIng.setBounds(0, 0, 100000, 400);
@@ -125,7 +120,7 @@ public class showGame extends JFrame {
 				if (x <= -15700) {
 					timer.stop();
 					x = 0;
-					//resultPanel.setVisible(true);
+					// resultPanel.setVisible(true);
 				} else {
 					bgIng.setLocation(x, 0);
 
@@ -134,12 +129,11 @@ public class showGame extends JFrame {
 		});
 		timer.start();
 
-
 		characterIng = new JLabel(""); // 게임중인 캐릭터
 		whereX = 50;
 		whereY = 280;
 		characterIng.setFocusable(true);
-		characterIng.setBounds(whereX, whereY, 100, 100);
+		characterIng.setBounds(whereX, whereY, 350, 153);
 		characterIng.addKeyListener(new KeyListener() {
 			private int count = 0;
 
@@ -154,6 +148,7 @@ public class showGame extends JFrame {
 			@Override
 			public void keyPressed(KeyEvent e) {
 				int key = e.getKeyCode();
+
 				if (key == KeyEvent.VK_UP) {
 					whereY = 220;
 					characterIng.setBounds(whereX, whereY, 100, 100);
@@ -161,9 +156,11 @@ public class showGame extends JFrame {
 					if (count == 1) {
 //                  System.out.println("1단점프");
 						System.out.println("(x, y) = " + getWhereX() + ", " + getWhereY());
-					}
 
+					}
+// 					자동내려오기
 				}
+
 				if (key == KeyEvent.VK_DOWN) {
 //               System.out.println("슬라이드");
 					count = 0;
@@ -173,6 +170,23 @@ public class showGame extends JFrame {
 				}
 			}
 		});
+
+		down = new Timer(1000, new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+
+				if (whereY == 220) {
+					setWhereX(50);
+					setWhereY(280);
+					characterIng.setBounds(whereX, whereY, 100, 100);
+					System.out.println("자동 내려오기");
+				} else {
+					down.stop();
+				}
+			}
+		});
+		down.start();
+		;
+
 		characterIng.setIcon(new ImageIcon(imC));
 		try {
 			grapPix();

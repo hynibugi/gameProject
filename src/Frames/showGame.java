@@ -37,6 +37,9 @@ public class showGame extends JFrame {
 	int whereY;
 	private JPanel contentPnl;
 	private JLabel characterIng;
+	private Timer score; // 점수 타이머
+	private int score1 = 0;
+	private JLabel lbl_score;
 	private Timer timer; // 배경 타이머
 
 	private int x;
@@ -87,6 +90,7 @@ public class showGame extends JFrame {
 						j.setVisible(false);
 						step.stop();
 						timer.stop();
+						score.stop();
 					}
 
 				}
@@ -178,7 +182,9 @@ public class showGame extends JFrame {
 					setWhereY(280);
 					characterIng.setBounds(whereX, whereY, 100, 100);
 					System.out.println("자동 내려오기");
-				} 
+				} else {
+					down.stop();
+				}
 			}
 		});
 		down.start();
@@ -190,9 +196,31 @@ public class showGame extends JFrame {
 		} catch (IOException e1) {
 			e1.printStackTrace();
 		}
+
+		lbl_score = new JLabel(String.valueOf(score1));
+
+		lbl_score.setFont(new Font("맑은 고딕", Font.BOLD, 15));
+		lbl_score.setBounds(583, 10, 90, 31);
+
+		score1 = 0;
+		score = new Timer(1000, new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				System.out.println("10점씩 증가");
+				System.out.println(score1);
+				score1 += 10;
+
+				lbl_score.setText(String.valueOf(score1));
+
+			}
+		});
+		score.start();
+
+		contentPnl.add(lbl_score);
 		characterIng.setIcon(new ImageIcon(imC));
 		contentPnl.add(characterIng);
 		contentPnl.add(bgIng);
+
 	}
 
 }

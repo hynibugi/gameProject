@@ -237,4 +237,17 @@ public class UserinfoRepositoryImpl implements UserinfoRepository {
 		return -1;
 	}
 
+	@Override
+	public int choiceCharacte(int myNo, int whatCharacter) {
+		String sql = "UPDATE project_game.user SET gamecharacter = ? where no = ?";
+		try (Connection conn = ConnectionProvider.makeConnection();	
+				PreparedStatement stmt = conn.prepareStatement(sql)) {
+			stmt.setInt(1, whatCharacter);
+			stmt.setInt(2, myNo);
+			return stmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new DataIOException(e);
+		}
+	}
 }

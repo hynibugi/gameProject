@@ -102,8 +102,8 @@ public class Menu extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				new MyRoom(logIn).showGUI();
-				//dispose();
-				
+				// dispose();
+
 			}
 		});
 		contentPane.add(btn_MyRoom);

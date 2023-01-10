@@ -42,8 +42,8 @@ public class showGame extends JFrame {
 	private JLabel scoreImg;
 	private JLabel characterImg;
 	private Timer scoreTimer; // 점수 타이머
-	int scoreResult = 0;
-	int starScore = 0;
+	int scoreResult;
+	int starScore;
 	private JLabel lblMoney;
 	private JLabel lblScore;
 	private Timer backTimer; // 배경 타이머
@@ -54,6 +54,14 @@ public class showGame extends JFrame {
 	private Timer huddleTimer;
 	private Timer starTimer;
 	private Timer downTimer;
+
+	public int getScoreResult() {
+		return scoreResult;
+	}
+
+	public int getStarScore() {
+		return starScore;
+	}
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -124,6 +132,8 @@ public class showGame extends JFrame {
 								starTimer.stop();
 								backTimer.stop();
 								scoreTimer.stop();
+								GameOver game = new GameOver(showGame.this);
+								game.setVisible(true);
 							}
 						}
 					}

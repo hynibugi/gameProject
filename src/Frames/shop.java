@@ -30,19 +30,6 @@ public class shop extends JFrame implements ActionListener {
 	private JLabel myMoney;
 	
 
-//	public static void main(String[] args) {
-//		EventQueue.invokeLater(new Runnable() {
-//			public void run() {
-//				try {
-//					shop frame = new shop();
-//					frame.setVisible(true);
-//				} catch (Exception e) {
-//					e.printStackTrace();
-//				}
-//			}
-//		});
-//	}
-
 	public shop(LogIn login) {
 		this.login = login;
 		UserinfoRepositoryImpl ur = new UserinfoRepositoryImpl();

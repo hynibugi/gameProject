@@ -101,7 +101,7 @@ public class Menu extends JFrame {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				new MyRoom().showGUI();
+				new MyRoom(logIn).showGUI();
 				//dispose();
 				
 			}

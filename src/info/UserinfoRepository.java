@@ -14,4 +14,5 @@ public interface UserinfoRepository {
 	int buyCharacter(String inputId, int whatCharacter);
 	int haveCharacter(int lastNo, int whatCharacter);
 	int getMyNo(String inputId);
+	int choiceCharacte(int myNo, int whatCharacter);
 }

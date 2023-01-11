@@ -31,14 +31,13 @@ public class showGame extends JFrame {
 	List<Huddle> huddleList = new ArrayList<>();
 	List<Huddle> starList = new ArrayList<>();
 	Toolkit kit = Toolkit.getDefaultToolkit();
-	
+
 	Image c1 = kit.getImage(classLoader.getResource("c1.gif"));
 	Image c2 = kit.getImage(classLoader.getResource("c2.gif"));
 	Image c3 = kit.getImage(classLoader.getResource("c3.gif"));
 	Image c4 = kit.getImage(classLoader.getResource("c4.gif"));
 	Image c5 = kit.getImage(classLoader.getResource("c5.gif"));
-	private Image[] cImage = {c1, c2, c3, c4, c5};
-	
+	private Image[] cImage = { c1, c2, c3, c4, c5 };
 
 	Image imgBg = kit.getImage(classLoader.getResource("background.png"));
 	Image imgScore = kit.getImage(classLoader.getResource("score.png"));
@@ -93,10 +92,10 @@ public class showGame extends JFrame {
 		this.whereY = whereY;
 	}
 
-	public void grapPix(LogIn logIn ) throws IOException {
+	public void grapPix(LogIn logIn) throws IOException {
 		this.login = logIn;
 		ur = new UserinfoRepositoryImpl();
-		
+
 		BufferedImage img = ImageIO.read(showGame.class.getClassLoader().getResource("01.png"));
 
 		for (int i = 0; i < img.getWidth(); i++) {
@@ -132,8 +131,10 @@ public class showGame extends JFrame {
 								j.setVisible(false);
 								iter.remove();
 								stopTimers();
+								dispose();
 								GameOver game = new GameOver(showGame.this);
 								game.setVisible(true);
+							
 								ur.saveScore(myNo, login.getMyLastRound(), scoreResult, starScore, findC + 1);
 							}
 						}
@@ -177,8 +178,8 @@ public class showGame extends JFrame {
 		this.login = logIn;
 		ur = new UserinfoRepositoryImpl();
 		myNo = ur.getMyNo(logIn.getMyId());
-		
-		//게임을 종료하기위한 메소드.
+
+		// 게임을 종료하기위한 메소드.
 		setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
 		addWindowListener(new WindowAdapter() {
 			@Override

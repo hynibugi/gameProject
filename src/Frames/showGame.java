@@ -135,6 +135,7 @@ public class showGame extends JFrame {
 								GameOver game = new GameOver(showGame.this);
 								game.setVisible(true);
 								ur.saveScore(myNo, login.getMyLastRound(), scoreResult, starScore, ur.getMyCharacter(login.getMyId()));
+
 							}
 						}
 					}

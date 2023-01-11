@@ -60,18 +60,15 @@ public class Menu extends JFrame {
 		btn_Shop.setBorder(new EmptyBorder(5, 5, 5, 5));
 		btn_Shop.setBackground(new Color(255, 255, 255));
 		btn_Shop.setBounds(290, 100, 100, 50);
-		btn_Shop.addActionListener(new ActionListener() {
-			
-
+		btn_Shop.addActionListener(new ActionListener() {	
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				
 				String inputId = logIn.getMyId();
-				String myMoney = String.valueOf(ur.countMoney(inputId));
 				System.out.println(inputId);
-				System.out.println(myMoney);
 				shop sh = new shop(logIn);
 				ur.setMoney(logIn.getMyNo());
+				String myMoney = String.valueOf(ur.countMoney(inputId));
+				System.out.println(myMoney);
 				sh.showMoney(myMoney);
 				sh.showGUI();	
 			}

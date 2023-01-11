@@ -20,5 +20,6 @@ public interface UserinfoRepository {
 	int findLastRound(int myNo);
 	int stadardRound(int lastNo);
 	int saveScore(int myNo, int lastRound, int score, int money, int myCharacter);
+	int getMyCharacter(String inputId);
 	
 }

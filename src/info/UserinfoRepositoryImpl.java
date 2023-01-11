@@ -357,5 +357,24 @@ public class UserinfoRepositoryImpl implements UserinfoRepository {
 		}
 	}
 
+	@Override
+	public int getMyCharacter(String inputId) {
+		String sql = "SELECT gamecharacter FROM project_game.user WHERE ID = ?";
+		try (Connection conn = ConnectionProvider.makeConnection();
+				PreparedStatement stmt = conn.prepareStatement(sql)) {			
+			stmt.setString(1, inputId);	
+			try (ResultSet rs = stmt.executeQuery()) {
+				if (rs.next()) {
+					return rs.getInt(1);
+				}
+			}		
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new DataIOException(e);
+		}	
+		return 0;
+	}
+
 	
+
 }

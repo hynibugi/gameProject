@@ -12,6 +12,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
 import info.UserinfoRepositoryImpl;
@@ -103,6 +104,7 @@ public class LogIn extends JFrame {
 					System.out.println(myId);
 				} else {
 					System.out.println("로그인 실패");
+					JOptionPane.showMessageDialog(null,"아이디 및 비밀번호를 확인하세요","로그인 실패!",JOptionPane.WARNING_MESSAGE);
 				}
 			}
 		});

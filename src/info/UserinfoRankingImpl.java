@@ -20,7 +20,7 @@ public class UserinfoRankingImpl implements UserinfoRanking {
 		try(Connection conn = ConnectionProvider.makeConnection();
 				PreparedStatement stmt = conn.prepareStatement(sql)) {
 				stmt.setInt(1, grade - 1);
-				
+				 
 				try (ResultSet rs = stmt.executeQuery()) {
 					if (rs.next()) {
 						String bestNic  = rs.getString("nickname");
@@ -72,7 +72,7 @@ public class UserinfoRankingImpl implements UserinfoRanking {
 				
 				try (ResultSet rs = stmt.executeQuery()) {
 					if (rs.next()) {
-						int bestCharacter  = rs.getInt("roundCharacter");
+						int bestCharacter  = rs.getInt(1);
 						return bestCharacter;
 					}
 				}

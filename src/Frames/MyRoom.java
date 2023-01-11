@@ -4,6 +4,8 @@ import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -36,10 +38,17 @@ public class MyRoom extends JFrame implements ActionListener {
 	
 	private LogIn login;
 	private int myNo;
-	private UserinfoRepositoryImpl ur;
+	private UserinfoRepositoryImpl ur; 
 
 
 	public MyRoom(LogIn logIn) {
+		addWindowListener(new WindowAdapter() {
+			@Override
+			public void windowClosing(WindowEvent e) {
+				Menu menu = new Menu(login);
+				menu.showGUI();
+			}
+		});
 		this.login = logIn;
 		ur = new UserinfoRepositoryImpl();
 		setBounds(100, 100, 832, 400);
@@ -112,6 +121,7 @@ public class MyRoom extends JFrame implements ActionListener {
 					if (haveResult == 1) {
 						choice[i].setIcon(new ImageIcon(choiceImage));
 						ur.choiceCharacte(myNo, i + 1);
+						login.setMyCharacter(i + 1);
 					}
 			} else {
 				choice[i].setIcon(null);

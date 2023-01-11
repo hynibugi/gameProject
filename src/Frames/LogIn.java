@@ -22,7 +22,7 @@ public class LogIn extends JFrame {
 	ClassLoader classLoader = getClass().getClassLoader();
 	Toolkit kit = Toolkit.getDefaultToolkit();
 	Image mainLogin = kit.getImage(classLoader.getResource("mainLogIn.png"));
-
+ 
 	private String myId;
 	private int myNo;
 	private int myLastRound;
@@ -47,20 +47,17 @@ public class LogIn extends JFrame {
 			}
 		});
 	}
+	
 
 	public int getMyCharacter() {
-		myCharacter = ur.getMyCharacter(myId);
 		return myCharacter;
 	}
-
 	public void setMyCharacter(int myCharacter) {
 		this.myCharacter = myCharacter;
 	}
-
 	public int getMyNo() {
 		return myNo;
 	}
-
 	public int getMyLastRound() {
 		return myLastRound;
 	}
@@ -105,14 +102,9 @@ public class LogIn extends JFrame {
 		jbts[0].addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-
-				
 				new SignUp().showGUI();
-
 			}
 		});
-
-//		UserinfoRepositoryImpl ur = new UserinfoRepositoryImpl();
 
 		jbts[1].addActionListener(new ActionListener() {
 			@Override
@@ -132,12 +124,15 @@ public class LogIn extends JFrame {
 					System.out.println(myId);
 					System.out.println(myNo + "//" + myLastRound);
 
+
 				} else {
 					System.out.println("로그인 실패");
 					JOptionPane.showMessageDialog(null, "아이디 및 비밀번호를 확인하세요", "로그인 실패!", JOptionPane.WARNING_MESSAGE);
 				}
 			}
 		});
+		
+		myCharacter = ur.getMyCharacter(myId);
 
 		jbts[2].addActionListener(new ActionListener() {
 			@Override

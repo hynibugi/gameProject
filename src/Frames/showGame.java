@@ -134,7 +134,7 @@ public class showGame extends JFrame {
 								stopTimers();
 								GameOver game = new GameOver(showGame.this);
 								game.setVisible(true);
-								ur.saveScore(myNo, login.getMyLastRound(), scoreResult, starScore, findC + 1);
+								ur.saveScore(myNo, login.getMyLastRound(), scoreResult, starScore, ur.getMyCharacter(login.getMyId()));
 							}
 						}
 					}

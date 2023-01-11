@@ -66,7 +66,6 @@ public class showGame extends JFrame {
 	private Timer starTimer;
 	private Timer downTimer;
 	private int myNo;
-	private int lastRound;
 	private int findC;
 
 	public int getScoreResult() {
@@ -75,22 +74,6 @@ public class showGame extends JFrame {
 
 	public int getStarScore() {
 		return starScore;
-	}
-
-	public int getWhereX() {
-		return whereX;
-	}
-
-	public void setWhereX(int whereX) {
-		this.whereX = whereX;
-	}
-
-	public int getWhereY() {
-		return whereY;
-	}
-
-	public void setWhereY(int whereY) {
-		this.whereY = whereY;
 	}
 
 	public void grapPix(LogIn logIn) throws IOException {
@@ -118,7 +101,7 @@ public class showGame extends JFrame {
 				}
 			}
 		}
-		huddleTimer = new Timer(80, new ActionListener() { // 이동속도 변경
+		huddleTimer = new Timer(80, new ActionListener() { // 장애물 이동
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				Iterator<Huddle> iter = huddleList.iterator();
@@ -126,15 +109,11 @@ public class showGame extends JFrame {
 					Huddle j = iter.next();
 					j.setLocation(j.getX() - 10, j.getY()); // x값-10하기
 					for (int i = 40; i < 84; i++) {
-						if (j.getX() == i && 280 == getWhereY()) {
+						if (j.getX() == i && 280 == whereY) {
 							if (characterUp == false) {
 								j.setVisible(false);
 								iter.remove();
 								stopTimers();
-								GameOver game = new GameOver(showGame.this);
-								game.setVisible(true);
-								ur.saveScore(myNo, ur.findLastRound(myNo), scoreResult, starScore, login.getMyCharacter());
-
 							}
 						}
 					}
@@ -143,7 +122,7 @@ public class showGame extends JFrame {
 		});
 		huddleTimer.start(); // 타이머시작
 
-		starTimer = new Timer(80, new ActionListener() { // 이동속도 변경
+		starTimer = new Timer(80, new ActionListener() { // 초코비 이동
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				Iterator<Huddle> iter = starList.iterator();
@@ -155,7 +134,7 @@ public class showGame extends JFrame {
 							if (characterUp == true) {
 								j.setVisible(false);
 								iter.remove();
-								starScore += 10;
+								starScore += 50;
 								lblMoney.setText(String.valueOf(starScore));
 							}
 						}
@@ -171,6 +150,9 @@ public class showGame extends JFrame {
 		starTimer.stop();
 		backTimer.stop();
 		scoreTimer.stop();
+		GameOver game = new GameOver(login, showGame.this);
+		game.setVisible(true);
+		ur.saveScore(myNo, ur.findLastRound(myNo), scoreResult, starScore, login.getMyCharacter());
 	}
 
 	public showGame(LogIn logIn) {
@@ -186,6 +168,8 @@ public class showGame extends JFrame {
 				stopTimers();
 				huddleList = null;
 				starList = null;
+				Menu menu = new Menu(login);
+				menu.showGUI();
 				dispose();
 			}
 		});
@@ -205,7 +189,9 @@ public class showGame extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				x -= 4;
 				if (x <= -15700) {
-					backTimer.stop();
+					backTimer.start();
+					huddleTimer.setRepeats(true);
+					starTimer.setRepeats(true);
 					x = 0;
 				} else {
 					bgIng.setLocation(x, 0);
@@ -242,6 +228,7 @@ public class showGame extends JFrame {
 					characterImg.setBounds(whereX, whereY, 90, 90);
 				}
 				if (e.getKeyCode() == KeyEvent.VK_DOWN) {
+					downTimer.stop();
 					characterUp = false;
 					characterImg.setIcon(new ImageIcon(cImage[findC]));
 					whereY = 280;
@@ -253,8 +240,8 @@ public class showGame extends JFrame {
 		downTimer = new Timer(1200, new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (whereY == 220) {
-					setWhereX(50);
-					setWhereY(280);
+					whereX = 50;
+					whereY = 280;
 					characterUp = false;
 					characterImg.setIcon(new ImageIcon(cImage[findC]));
 					characterImg.setBounds(whereX, whereY, 90, 90);
@@ -262,6 +249,7 @@ public class showGame extends JFrame {
 				}
 			}
 		});
+		
 
 		try {
 			grapPix(login);
@@ -276,12 +264,12 @@ public class showGame extends JFrame {
 		lblMoney = new JLabel(String.valueOf(scoreResult));
 		lblMoney.setBounds(240, 12, 50, 73);
 		lblMoney.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblMoney.setFont(new Font("맑은 고딕", Font.BOLD, 22));
+		lblMoney.setFont(new Font("맑은 고딕", Font.BOLD, 18));
 
 		lblScore = new JLabel(String.valueOf(scoreResult));
 		lblScore.setBounds(100, 12, 50, 73);
 		lblScore.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblScore.setFont(new Font("맑은 고딕", Font.BOLD, 22));
+		lblScore.setFont(new Font("맑은 고딕", Font.BOLD, 18));
 
 		scoreResult = 0;
 		scoreTimer = new Timer(1000, new ActionListener() {

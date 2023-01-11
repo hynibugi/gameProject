@@ -6,6 +6,8 @@ import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -26,6 +28,7 @@ public class Rank extends JFrame {
 	Image c3 = kit.getImage(classLoader.getResource("c3.gif"));
 	Image c4 = kit.getImage(classLoader.getResource("c4.gif"));
 	Image c5 = kit.getImage(classLoader.getResource("c5.gif"));
+	
 	private Image[] cImage = {c1, c2, c3, c4, c5};
 	
 	final String[] imagetTitle = {"c1", "c2", "c3", "c4", "c5"};
@@ -35,10 +38,21 @@ public class Rank extends JFrame {
 	private JLabel contentPane;
 	private JLabel[] whatRank = new JLabel[rankTitle.length];
 	private JLabel[] whoNic = new JLabel[5];
-	private JLabel[] whoScore = new JLabel[5];
+	private JLabel[] whoScore = new JLabel[5]; 
 	private JLabel[] whoCharacter = new JLabel[5];
+	private JLabel lbl_characterA;
+	private int bestCha;
 	
-	public Rank() {
+	public Rank(LogIn login) {
+		addWindowListener(new WindowAdapter() {
+			@Override
+			public void windowClosing(WindowEvent e) {
+				Menu menu = new Menu(login);
+				menu.showGUI();
+				cImage = null;
+			} 
+		});
+		
 		setBounds(100, 100, 500, 600);
 		contentPane = new JLabel();
 		contentPane.setBorder(null);
@@ -47,7 +61,8 @@ public class Rank extends JFrame {
 		contentPane.setLayout(null);
 		
 		JPanel panel = new JPanel();
-		panel.setBackground(new Color(255, 255, 255, 100));
+		panel.setOpaque(true);
+		panel.setBackground(new Color(255, 255, 255));
 		panel.setBounds(65, 54, 349, 90);
 		contentPane.add(panel);
 		panel.setLayout(null);
@@ -55,24 +70,24 @@ public class Rank extends JFrame {
 		// 캐릭터 -------------------------------------------------------
 		
 		UserinfoRankingImpl uRank = new UserinfoRankingImpl();
-		int bestCha = uRank.getBestcharacter(1);
+		bestCha = uRank.getBestcharacter(1);
+		System.out.println(bestCha + "??????");
 		
-		JLabel lbl_characterA = new JLabel("");
+		lbl_characterA = new JLabel("");
+		// lbl_characterA.setBackground();
+		lbl_characterA.setOpaque(false);
 		lbl_characterA.setIcon(new ImageIcon(cImage[bestCha - 1]));
 		lbl_characterA.setBounds(20, 0, 90, 90);
 		panel.add(lbl_characterA);
 		
-		
-		
 		for (int i = 1; i < whoCharacter.length; i++) {
-			int orderByCha = uRank.getBestcharacter(i + 1);
+			int orderByCha = uRank.getBestcharacter(i + 1) - 1;
 			System.out.println(orderByCha);
 			whoCharacter[i] = new JLabel("");
-			whoCharacter[i].setIcon(new ImageIcon(cImage[orderByCha - 1]));
+			whoCharacter[i].setIcon(new ImageIcon(cImage[orderByCha]));
 			whoCharacter[i].setBounds(85, 155 + (i - 1) * 100 , 90, 90);
 			contentPane.add(whoCharacter[i]);			
 		}
-		
 		
 		// 등수 -------------------------------------------------------
 		

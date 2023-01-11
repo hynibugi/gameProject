@@ -22,7 +22,7 @@ public class SuccessSignUp extends JFrame {
 	Image btnPng = kit.getImage(classLoader.getResource("btnSignUpPage.png"));
 
 	
-	private JLabel contentPane;
+	private JLabel contentPane; 
 	
 	public SuccessSignUp(SignUp signUp) {
 		signUp.dispose();

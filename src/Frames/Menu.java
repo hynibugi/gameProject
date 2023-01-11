@@ -44,6 +44,7 @@ public class Menu extends JFrame {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				setVisible(false);
 				new showGame(logIn).setVisible(true);
 				
 				//dispose();
@@ -63,6 +64,7 @@ public class Menu extends JFrame {
 		btn_Shop.addActionListener(new ActionListener() {	
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				setVisible(false);
 				String inputId = logIn.getMyId();
 				System.out.println(inputId);
 				shop sh = new shop(logIn);
@@ -84,9 +86,8 @@ public class Menu extends JFrame {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				new Rank().showGUI();
-				//dispose();
-				
+				setVisible(false);
+				new Rank(logIn).showGUI();
 			}
 		});
 		contentPane.add(btn_Rank);
@@ -100,6 +101,7 @@ public class Menu extends JFrame {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				setVisible(false);
 				new MyRoom(logIn).showGUI();
 				// dispose();
 

@@ -345,7 +345,7 @@ public class UserinfoRepositoryImpl implements UserinfoRepository {
 				PreparedStatement stmt = conn.prepareStatement(sql);) {
 			stmt.setInt(1, myNo);
 			stmt.setInt(2, lastRound + 1);
-			stmt.setInt(3, score);
+			stmt.setInt(3, score); 
 			stmt.setInt(4, money);
 			stmt.setInt(5, myCharacter);
 

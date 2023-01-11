@@ -6,6 +6,8 @@ import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -38,8 +40,15 @@ public class shop extends JFrame implements ActionListener {
 	private int[] characterPrice = {3000, 5000, 7000, 9000};
 	private JLabel myMoney;
 	
-
+  
 	public shop(LogIn login) {
+		addWindowListener(new WindowAdapter() {
+			@Override
+			public void windowClosing(WindowEvent e) {
+				Menu menu = new Menu(login);
+				menu.showGUI();
+			}
+		});
 		this.login = login;
 		UserinfoRepositoryImpl ur = new UserinfoRepositoryImpl();
 		

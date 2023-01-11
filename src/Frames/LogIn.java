@@ -22,7 +22,7 @@ public class LogIn extends JFrame {
 	ClassLoader classLoader = getClass().getClassLoader();
 	Toolkit kit = Toolkit.getDefaultToolkit();
 	Image mainLogin = kit.getImage(classLoader.getResource("mainLogIn.png"));
-
+ 
 	private String myId;
 	private int myNo;
 	private int myLastRound;

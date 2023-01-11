@@ -13,7 +13,7 @@ import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.Color;
 
-public class manual extends JFrame {
+public class manual extends JFrame {  
 	ClassLoader classLoader = getClass().getClassLoader();
 	Toolkit kit = Toolkit.getDefaultToolkit();
 	Image keyboard = kit.getImage(classLoader.getResource("keyboard.png"));

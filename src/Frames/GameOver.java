@@ -6,6 +6,8 @@ import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
@@ -19,28 +21,24 @@ import javax.swing.JButton;
 import java.awt.Font;
 
 public class GameOver extends JFrame {
-
+	private LogIn login;
 	ClassLoader classLoader = getClass().getClassLoader();
 	Toolkit kit = Toolkit.getDefaultToolkit();
-	Image gameover = kit.getImage(classLoader.getResource("GameOver.png"));
+	Image gameover = kit.getImage(classLoader.getResource("gameover.png"));
 	private JPanel contentPane;
 	showGame sg;
 
 
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					GameOver frame = new GameOver(null);
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
+	public GameOver(LogIn login, showGame showGame) {
+		
+		addWindowListener(new WindowAdapter() {
+			@Override
+			public void windowClosing(WindowEvent e) {
+				Menu menu = new Menu(login);
+				menu.showGUI();
 			}
 		});
-	}
-
-	public GameOver(showGame showGame) {
+		
 		sg = showGame;
 		sg.dispose();
 		setBounds(100, 100, 769, 482);
@@ -69,6 +67,6 @@ public class GameOver extends JFrame {
 		backgroundIm.setBounds(-26, -28, 769, 493);
 		backgroundIm.setIcon(new ImageIcon(gameover));
 		panel.add(backgroundIm);
-
+ 
 	}
 }

@@ -44,7 +44,7 @@ public class SignUp extends JFrame implements KeyListener {
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
-			}
+			} 
 		});
 	}
 

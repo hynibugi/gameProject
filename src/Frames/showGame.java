@@ -132,6 +132,7 @@ public class showGame extends JFrame {
 								j.setVisible(false);
 								iter.remove();
 								stopTimers();
+								dispose();
 								GameOver game = new GameOver(showGame.this);
 								game.setVisible(true);
 								ur.saveScore(myNo, login.getMyLastRound(), scoreResult, starScore, ur.getMyCharacter(login.getMyId()));

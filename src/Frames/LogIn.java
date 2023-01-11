@@ -61,13 +61,14 @@ public class LogIn extends JFrame {
 	public int getMyLastRound() {
 		return myLastRound;
 	}
+
 	public String getMyId() {
 		return myId;
 	}
 
 	public LogIn() {
 		ur = new UserinfoRepositoryImpl();
-		
+
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 505, 405);
 		contentPane = new JLabel();
@@ -124,24 +125,24 @@ public class LogIn extends JFrame {
 					System.out.println("로그인 성공");
 					System.out.println(myId);
 					System.out.println(myNo + "//" + myLastRound);
+
+
 				} else {
 					System.out.println("로그인 실패");
-					JOptionPane.showMessageDialog(null,"아이디 및 비밀번호를 확인하세요","로그인 실패!",JOptionPane.WARNING_MESSAGE);
+					JOptionPane.showMessageDialog(null, "아이디 및 비밀번호를 확인하세요", "로그인 실패!", JOptionPane.WARNING_MESSAGE);
 				}
 			}
 		});
 
-		
 		jbts[2].addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				manual mn = new manual();
 				mn.setVisible(true);
 			}
-				
+
 		});
-		
-		
+
 	}
 
 	public void showGUI() {

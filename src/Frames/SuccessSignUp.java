@@ -39,6 +39,7 @@ public class SuccessSignUp extends JFrame {
 	public SuccessSignUp() {
 		//setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 505, 405);
+		dispose();
 		contentPane = new JLabel();		
 		contentPane.setBorder(null);
 		contentPane.setIcon(new ImageIcon(mainLogin));

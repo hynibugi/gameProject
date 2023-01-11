@@ -29,5 +29,8 @@ public class TestDB {
 //		int result = repo.findLastRound(2);
 //		System.out.println(result);
 		
+		int result = repo.choiceCharacte(53, 2);
+		System.out.println(result);
+		
 	}
 }

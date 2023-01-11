@@ -1,6 +1,5 @@
 package Frames;
 
-import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.Image;
 import java.awt.Toolkit;
@@ -24,14 +23,23 @@ import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.Timer;
 
+import info.UserinfoRepositoryImpl;
+
 public class showGame extends JFrame {
 
 	ClassLoader classLoader = getClass().getClassLoader();
 	List<Huddle> huddleList = new ArrayList<>();
 	List<Huddle> starList = new ArrayList<>();
 	Toolkit kit = Toolkit.getDefaultToolkit();
-	Image imstadardFirst = kit.getImage(classLoader.getResource("oneFirst.gif"));
-	Image imstadardSecond = kit.getImage(classLoader.getResource("oneSecond.gif"));
+	
+	Image c1 = kit.getImage(classLoader.getResource("c1.gif"));
+	Image c2 = kit.getImage(classLoader.getResource("c2.gif"));
+	Image c3 = kit.getImage(classLoader.getResource("c3.gif"));
+	Image c4 = kit.getImage(classLoader.getResource("c4.gif"));
+	Image c5 = kit.getImage(classLoader.getResource("c5.gif"));
+	private Image[] cImage = {c1, c2, c3, c4, c5};
+	
+
 	Image imgBg = kit.getImage(classLoader.getResource("background.png"));
 	Image imgScore = kit.getImage(classLoader.getResource("score.png"));
 	Image pepper = kit.getImage(classLoader.getResource("pepper.png"));
@@ -40,6 +48,7 @@ public class showGame extends JFrame {
 	int whereX;
 	int whereY;
 	private LogIn login;
+	private UserinfoRepositoryImpl ur;
 	private JPanel contentPnl;
 	private JLabel scoreImg;
 	private JLabel characterImg;
@@ -56,6 +65,9 @@ public class showGame extends JFrame {
 	private Timer huddleTimer;
 	private Timer starTimer;
 	private Timer downTimer;
+	private int myNo;
+	private int lastRound;
+	private int findC;
 
 	public int getScoreResult() {
 		return scoreResult;
@@ -64,7 +76,7 @@ public class showGame extends JFrame {
 	public int getStarScore() {
 		return starScore;
 	}
-	
+
 	public int getWhereX() {
 		return whereX;
 	}
@@ -81,8 +93,10 @@ public class showGame extends JFrame {
 		this.whereY = whereY;
 	}
 
-	public void grapPix() throws IOException {
-
+	public void grapPix(LogIn logIn ) throws IOException {
+		this.login = logIn;
+		ur = new UserinfoRepositoryImpl();
+		
 		BufferedImage img = ImageIO.read(showGame.class.getClassLoader().getResource("01.png"));
 
 		for (int i = 0; i < img.getWidth(); i++) {
@@ -105,7 +119,6 @@ public class showGame extends JFrame {
 				}
 			}
 		}
-
 		huddleTimer = new Timer(80, new ActionListener() { // 이동속도 변경
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -119,8 +132,9 @@ public class showGame extends JFrame {
 								j.setVisible(false);
 								iter.remove();
 								stopTimers();
-								GameOver game = new GameOver();
+								GameOver game = new GameOver(showGame.this);
 								game.setVisible(true);
+								ur.saveScore(myNo, login.getMyLastRound(), scoreResult, starScore, findC + 1);
 							}
 						}
 					}
@@ -160,9 +174,12 @@ public class showGame extends JFrame {
 	}
 
 	public showGame(LogIn logIn) {
-		this.login = login;
-		setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
+		this.login = logIn;
+		ur = new UserinfoRepositoryImpl();
+		myNo = ur.getMyNo(logIn.getMyId());
 		
+		//게임을 종료하기위한 메소드.
+		setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
 		addWindowListener(new WindowAdapter() {
 			@Override
 			public void windowClosing(WindowEvent e) {
@@ -172,7 +189,7 @@ public class showGame extends JFrame {
 				dispose();
 			}
 		});
-		
+
 		contentPnl = new JPanel();
 		setContentPane(contentPnl);
 		contentPnl.setBorder(null);
@@ -197,17 +214,20 @@ public class showGame extends JFrame {
 		});
 		backTimer.start();
 
+		findC = ur.findCharacte(logIn.getMyId()) - 1;
+		System.out.println("내캐릭터" + findC);
 		characterImg = new JLabel(""); // 게임중인 캐릭터
 		whereX = 50;
 		whereY = 280;
 		characterImg.setFocusable(true);
-		characterImg.setIcon(new ImageIcon(imstadardFirst));
+		characterImg.setIcon(new ImageIcon(cImage[findC]));
 		characterImg.setBounds(whereX, whereY, 90, 90);
 		characterImg.addKeyListener(new KeyListener() {
 
 			@Override
 			public void keyTyped(KeyEvent e) {
 			}
+
 			@Override
 			public void keyReleased(KeyEvent e) {
 			}
@@ -217,13 +237,13 @@ public class showGame extends JFrame {
 				downTimer.start();
 				if (e.getKeyCode() == KeyEvent.VK_UP) {
 					characterUp = true;
-					characterImg.setIcon(new ImageIcon(imstadardSecond));
+					characterImg.setIcon(new ImageIcon(cImage[findC]));
 					whereY = 220;
 					characterImg.setBounds(whereX, whereY, 90, 90);
 				}
 				if (e.getKeyCode() == KeyEvent.VK_DOWN) {
 					characterUp = false;
-					characterImg.setIcon(new ImageIcon(imstadardFirst));
+					characterImg.setIcon(new ImageIcon(cImage[findC]));
 					whereY = 280;
 					characterImg.setBounds(whereX, whereY, 90, 90);
 				}
@@ -236,7 +256,7 @@ public class showGame extends JFrame {
 					setWhereX(50);
 					setWhereY(280);
 					characterUp = false;
-					characterImg.setIcon(new ImageIcon(imstadardFirst));
+					characterImg.setIcon(new ImageIcon(cImage[findC]));
 					characterImg.setBounds(whereX, whereY, 90, 90);
 					downTimer.stop();
 				}
@@ -244,7 +264,7 @@ public class showGame extends JFrame {
 		});
 
 		try {
-			grapPix();
+			grapPix(login);
 		} catch (IOException e1) {
 			e1.printStackTrace();
 		}

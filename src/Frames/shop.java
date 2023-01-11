@@ -20,12 +20,21 @@ public class shop extends JFrame implements ActionListener {
 	private JLabel contentPane;
 	ClassLoader classLoader = getClass().getClassLoader();
 	Toolkit kit = Toolkit.getDefaultToolkit();
-	Image shopImage = kit.getImage(classLoader.getResource("showShop.png"));
+	Image shopImage = kit.getImage(classLoader.getResource("bgShop.png"));
 	Image lockImage = kit.getImage(classLoader.getResource("lock.png"));
+	
+	Image c2 = kit.getImage(classLoader.getResource("c2.gif"));
+	Image c3 = kit.getImage(classLoader.getResource("c3.gif"));
+	Image c4 = kit.getImage(classLoader.getResource("c4.gif"));
+	Image c5 = kit.getImage(classLoader.getResource("c5.gif"));
+	
+	
 	
 	
 	private JLabel[] price = new JLabel[4];
 	private JButton[] lock = new JButton[5];
+	private JLabel[] cImagelbl = new JLabel[4];
+	private Image[] cImage = {c2, c3, c4, c5};
 	private int[] characterPrice = {3000, 5000, 7000, 9000};
 	private JLabel myMoney;
 	
@@ -42,6 +51,7 @@ public class shop extends JFrame implements ActionListener {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
+		
 		for (int i = 1; i < lock.length; i++) {
 			lock[i] = new JButton();
 			lock[i].setIcon(new ImageIcon(lockImage));
@@ -50,6 +60,14 @@ public class shop extends JFrame implements ActionListener {
 			lock[i].setContentAreaFilled(false);
 			lock[i].addActionListener(this);
 			contentPane.add(lock[i]);
+		}
+		
+		for (int i = 0; i < cImagelbl.length; i++) {
+			cImagelbl[i] = new JLabel();
+			cImagelbl[i].setIcon(new ImageIcon(cImage[i]));
+			cImagelbl[i].setBorder(null);
+			cImagelbl[i].setBounds(45 + i * 160, 160, 118, 125);
+			contentPane.add(cImagelbl[i]);
 		}
 		
 		int myNo = ur.getMyNo(login.getMyId());

@@ -24,7 +24,7 @@ public class Menu extends JFrame {
 	Image munuImage = kit.getImage(classLoader.getResource("menu.png"));
 
 	public Menu(LogIn logIn) {
-
+		
 		setBounds(100, 100, 500, 400);
 		contentPane = new JLabel();
 		contentPane.setBorder(null);
@@ -44,7 +44,8 @@ public class Menu extends JFrame {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				new showGame().setVisible(true);
+				new showGame(logIn).setVisible(true);
+				
 				//dispose();
 				
 			}

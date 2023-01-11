@@ -24,12 +24,15 @@ public class LogIn extends JFrame {
 	Image mainLogin = kit.getImage(classLoader.getResource("mainLogIn.png"));
 
 	private String myId;
+	private int myNo;
+	private int myLastRound;
+	private UserinfoRepositoryImpl ur;
 	private JLabel contentPane;
 	private JLabel[] infoTitle = new JLabel[2];
 	private String[] infoTitles = { "아이디", "비밀번호" };
 	private JTextField[] infoField = new JTextField[2];
-	private JButton[] jbts = new JButton[2];
-	private String[] jbtsTitles = { "회원가입", "로그인" };
+	private JButton[] jbts = new JButton[3];
+	private String[] jbtsTitles = { "회원가입", "로그인", "메뉴얼" };
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -44,11 +47,16 @@ public class LogIn extends JFrame {
 		});
 	}
 
+	public int getMyLastRound() {
+		return myLastRound;
+	}
 	public String getMyId() {
 		return myId;
 	}
 
 	public LogIn() {
+		ur = new UserinfoRepositoryImpl();
+		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 505, 405);
 		contentPane = new JLabel();
@@ -74,7 +82,7 @@ public class LogIn extends JFrame {
 			jbts[i] = new JButton(jbtsTitles[i]);
 			jbts[i].setFont(new Font("맑은 고딕", Font.BOLD, 13));
 			jbts[i].setBorder(null);
-			jbts[i].setBounds(122 + i * 142, 210, 97, 35);
+			jbts[i].setBounds(58 + i * 142, 210, 97, 35);
 			jbts[i].setBackground(new Color(176, 232, 103));
 			contentPane.add(jbts[i]);
 		}
@@ -86,7 +94,7 @@ public class LogIn extends JFrame {
 			}
 		});
 
-		UserinfoRepositoryImpl ur = new UserinfoRepositoryImpl();
+//		UserinfoRepositoryImpl ur = new UserinfoRepositoryImpl();
 
 		jbts[1].addActionListener(new ActionListener() {
 			@Override
@@ -100,8 +108,11 @@ public class LogIn extends JFrame {
 				if (result == 1) {
 					new Menu(LogIn.this).showGUI();
 					myId = inputId;
+					myNo = ur.getMyNo(myId);
+					myLastRound = ur.findLastRound(myNo);
 					System.out.println("로그인 성공");
 					System.out.println(myId);
+					System.out.println(myNo + "//" + myLastRound);
 				} else {
 					System.out.println("로그인 실패");
 					JOptionPane.showMessageDialog(null,"아이디 및 비밀번호를 확인하세요","로그인 실패!",JOptionPane.WARNING_MESSAGE);
@@ -109,6 +120,17 @@ public class LogIn extends JFrame {
 			}
 		});
 
+		
+		jbts[2].addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				manual mn = new manual();
+				mn.setVisible(true);
+			}
+				
+		});
+		
+		
 	}
 
 	public void showGUI() {

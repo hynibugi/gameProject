@@ -13,21 +13,33 @@ import javax.swing.JLabel;
 import info.UserinfoRepositoryImpl;
 
 public class MyRoom extends JFrame implements ActionListener {
+	
+	ClassLoader classLoader = getClass().getClassLoader();
+	Toolkit kit = Toolkit.getDefaultToolkit();
+	Image mainRoom = kit.getImage(classLoader.getResource("bgMyRoom.png"));
+	Image lockImage = kit.getImage(classLoader.getResource("lock.png"));
+	Image choiceImage = kit.getImage(classLoader.getResource("choice.png"));
+	
+	Image c1 = kit.getImage(classLoader.getResource("c1.gif"));
+	Image c2 = kit.getImage(classLoader.getResource("c2.gif"));
+	Image c3 = kit.getImage(classLoader.getResource("c3.gif"));
+	Image c4 = kit.getImage(classLoader.getResource("c4.gif"));
+	Image c5 = kit.getImage(classLoader.getResource("c5.gif"));
+	private Image[] cImage = {c1, c2, c3, c4, c5};
+	
 	private LogIn login;
+	private String[] cImageName = {"달리는 짱구", "자전거 짱구", "시골의 짱구", "눈사람 짱구", "우비쓴 짱구" };
+	private JLabel[] cImageNamelbl = new JLabel[5];
+	private JLabel[] cImagelbl = new JLabel[5];
 	private JLabel contentPane;
 	private JButton[] lock = new JButton[5];
 	private JButton[] choice = new JButton[5];
-	ClassLoader classLoader = getClass().getClassLoader();
-	Toolkit kit = Toolkit.getDefaultToolkit();
-	Image mainRoom = kit.getImage(classLoader.getResource("myRoomBack.png"));
-	Image lockImage = kit.getImage(classLoader.getResource("lock.png"));
-	Image choiceImage = kit.getImage(classLoader.getResource("choice.png"));
 	private int myNo;
 	private UserinfoRepositoryImpl ur;
 
 
-	public MyRoom(LogIn login) {
-		this.login = login;
+	public MyRoom(LogIn logIn) {
+		this.login = logIn;
 		ur = new UserinfoRepositoryImpl();
 		setBounds(100, 100, 832, 400);
 		
@@ -50,14 +62,33 @@ public class MyRoom extends JFrame implements ActionListener {
 		for (int i = 0; i < lock.length; i++) {
 			choice[i] = new JButton();
 			choice[i].setBorder(null);
-			choice[i].setBounds(32 + i * 160, 160, 118, 125);
+			choice[i].setBounds(75 + i * 160, 200, 118, 125);
 			choice[i].setContentAreaFilled(false);
-			choice[i].addActionListener(this);
 			contentPane.add(choice[i]);
+			choice[i].addActionListener(this);
 		}
-		choice[0].setIcon(new ImageIcon(choiceImage));
+		int findC = ur.findCharacte(login.getMyId()) - 1;
+		System.out.println("내캐릭터" + findC);
+		choice[findC].setIcon(new ImageIcon(choiceImage));
+		
+		for (int i = 0; i < cImagelbl.length; i++) {
+			cImagelbl[i] = new JLabel();
+			cImagelbl[i].setIcon(new ImageIcon(cImage[i]));
+			cImagelbl[i].setFocusable(false);
+			cImagelbl[i].setBorder(null);
+			cImagelbl[i].setBounds(45 + i * 160, 160, 118, 125);
+			contentPane.add(cImagelbl[i]);
+		}
+		
+		for (int i = 0; i < cImageNamelbl.length; i++) {
+			cImageNamelbl[i] = new JLabel(cImageName[i]);
+			cImageNamelbl[i].setBorder(null);
+			cImageNamelbl[i].setBounds(58 + i * 159, 260, 118, 125);
+			contentPane.add(cImageNamelbl[i]);
+		}
 		
 		myNo = ur.getMyNo(login.getMyId());
+		System.out.println(myNo + ": myNo");
 		
 		for ( int i = 0; i < lock.length; i++) {
 			int haveResult = ur.haveCharacter(myNo, i + 1);
@@ -70,15 +101,17 @@ public class MyRoom extends JFrame implements ActionListener {
 	public void showGUI() {
 		setVisible(true);
 	}
+
 	@Override
 	public void actionPerformed(ActionEvent e) {
+
 		for (int i = 0; i < choice.length; i++) {
 			if(e.getSource() == choice[i]) {
 					int haveResult = ur.haveCharacter(myNo, i + 1);
 					if (haveResult == 1) {
 						choice[i].setIcon(new ImageIcon(choiceImage));
 						ur.choiceCharacte(myNo, i + 1);
-				}
+					}
 			} else {
 				choice[i].setIcon(null);
 			}

@@ -47,17 +47,20 @@ public class LogIn extends JFrame {
 			}
 		});
 	}
-	
+
 	public int getMyCharacter() {
 		myCharacter = ur.getMyCharacter(myId);
 		return myCharacter;
 	}
+
 	public void setMyCharacter(int myCharacter) {
 		this.myCharacter = myCharacter;
 	}
+
 	public int getMyNo() {
 		return myNo;
 	}
+
 	public int getMyLastRound() {
 		return myLastRound;
 	}
@@ -102,7 +105,10 @@ public class LogIn extends JFrame {
 		jbts[0].addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
+
+				
 				new SignUp().showGUI();
+
 			}
 		});
 
@@ -125,7 +131,6 @@ public class LogIn extends JFrame {
 					System.out.println("로그인 성공");
 					System.out.println(myId);
 					System.out.println(myNo + "//" + myLastRound);
-
 
 				} else {
 					System.out.println("로그인 실패");

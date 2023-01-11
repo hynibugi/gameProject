@@ -1,4 +1,5 @@
 package Frames;
+
 import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.Font;
@@ -22,9 +23,9 @@ public class Menu extends JFrame {
 	ClassLoader classLoader = getClass().getClassLoader();
 	Toolkit kit = Toolkit.getDefaultToolkit();
 	Image munuImage = kit.getImage(classLoader.getResource("menu.png"));
-	
+
 	public Menu(LogIn logIn) {
-		
+
 		setBounds(100, 100, 500, 400);
 		contentPane = new JLabel();
 		contentPane.setBorder(null);
@@ -32,40 +33,38 @@ public class Menu extends JFrame {
 		contentPane.setBackground(Color.WHITE);
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
-		
-		//----------------------------------------------- 
-		
+
+		// -----------------------------------------------
+
 		JButton btn_gameStart = new JButton("게임시작");
 		btn_gameStart.setFont(new Font("맑은 고딕", Font.BOLD, 15));
 		btn_gameStart.setBorder(new EmptyBorder(5, 5, 5, 5));
 		btn_gameStart.setBackground(new Color(255, 255, 255));
 		btn_gameStart.setBounds(100, 100, 100, 50);
 		btn_gameStart.addActionListener(new ActionListener() {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				new showGame(logIn).setVisible(true);
-				
-				//dispose();
-				
+
+				// dispose();
+
 			}
 		});
 		contentPane.add(btn_gameStart);
-		
-		UserinfoRepositoryImpl ur = new UserinfoRepositoryImpl();		
-		
-		
+
+		UserinfoRepositoryImpl ur = new UserinfoRepositoryImpl();
+
 		JButton btn_Shop = new JButton("상점");
 		btn_Shop.setFont(new Font("맑은 고딕", Font.BOLD, 15));
 		btn_Shop.setBorder(new EmptyBorder(5, 5, 5, 5));
 		btn_Shop.setBackground(new Color(255, 255, 255));
 		btn_Shop.setBounds(290, 100, 100, 50);
 		btn_Shop.addActionListener(new ActionListener() {
-			
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				
+
 				String inputId = logIn.getMyId();
 				String myMoney = String.valueOf(ur.countMoney(inputId));
 				System.out.println(inputId);
@@ -73,34 +72,34 @@ public class Menu extends JFrame {
 				shop sh = new shop(logIn);
 				ur.setMoney(logIn.getMyNo());
 				sh.showMoney(myMoney);
-				sh.showGUI();	
+				sh.showGUI();
 			}
 		});
 		contentPane.add(btn_Shop);
-		
+
 		JButton btn_Rank = new JButton("순위");
 		btn_Rank.setFont(new Font("맑은 고딕", Font.BOLD, 15));
 		btn_Rank.setBorder(new EmptyBorder(5, 5, 5, 5));
 		btn_Rank.setBackground(new Color(255, 255, 255));
 		btn_Rank.setBounds(100, 200, 100, 50);
 		btn_Rank.addActionListener(new ActionListener() {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				new Rank().showGUI();
-				//dispose();
-				
+				// dispose();
+
 			}
 		});
 		contentPane.add(btn_Rank);
-		
+
 		JButton btn_MyRoom = new JButton("마이룸");
 		btn_MyRoom.setFont(new Font("맑은 고딕", Font.BOLD, 15));
 		btn_MyRoom.setBorder(new EmptyBorder(5, 5, 5, 5));
 		btn_MyRoom.setBackground(new Color(255, 255, 255));
 		btn_MyRoom.setBounds(290, 200, 100, 50);
 		btn_MyRoom.addActionListener(new ActionListener() {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				new MyRoom(logIn).showGUI();
@@ -110,7 +109,7 @@ public class Menu extends JFrame {
 		});
 		contentPane.add(btn_MyRoom);
 	}
-	
+
 	public void showGUI() {
 		setVisible(true);
 	}

@@ -155,7 +155,7 @@ public class SignUp extends JFrame implements KeyListener {
 					int lastNo = ur.lastNo();
 					int standardCharacter = ur.standardCharacter(lastNo);
 					int standardRound = ur.stadardRound(lastNo);
-					new SuccessSignUp().showGUI();
+					new SuccessSignUp(SignUp.this).showGUI();
 					System.out.println(result + "명 회원가입 성공");
 					System.out.println(lastNo + " : 마지막 회원가입 No");
 					System.out.println(standardCharacter + ": 마지막 가입자 캐릭터 부여");

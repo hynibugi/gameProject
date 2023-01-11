@@ -40,14 +40,9 @@ public class GameOver extends JFrame {
 		});
 	}
 
-	/**
-	 * Create the frame.
-	 * 
-	 * @param showGame
-	 */
 	public GameOver(showGame showGame) {
 		sg = showGame;
-//		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		sg.dispose();
 		setBounds(100, 100, 769, 482);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));

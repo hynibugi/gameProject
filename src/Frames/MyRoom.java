@@ -112,6 +112,7 @@ public class MyRoom extends JFrame implements ActionListener {
 					if (haveResult == 1) {
 						choice[i].setIcon(new ImageIcon(choiceImage));
 						ur.choiceCharacte(myNo, i + 1);
+						login.setMyCharacter(i + 1);
 					}
 			} else {
 				choice[i].setIcon(null);

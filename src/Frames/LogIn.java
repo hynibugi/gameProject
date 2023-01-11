@@ -48,8 +48,8 @@ public class LogIn extends JFrame {
 		});
 	}
 	
+
 	public int getMyCharacter() {
-		myCharacter = ur.getMyCharacter(myId);
 		return myCharacter;
 	}
 	public void setMyCharacter(int myCharacter) {
@@ -106,8 +106,6 @@ public class LogIn extends JFrame {
 			}
 		});
 
-//		UserinfoRepositoryImpl ur = new UserinfoRepositoryImpl();
-
 		jbts[1].addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -133,6 +131,8 @@ public class LogIn extends JFrame {
 				}
 			}
 		});
+		
+		myCharacter = ur.getMyCharacter(myId);
 
 		jbts[2].addActionListener(new ActionListener() {
 			@Override

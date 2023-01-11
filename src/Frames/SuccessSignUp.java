@@ -24,20 +24,9 @@ public class SuccessSignUp extends JFrame {
 	
 	private JLabel contentPane;
 	
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					SuccessSignUp frame = new SuccessSignUp();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-	public SuccessSignUp() {
-		//setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	public SuccessSignUp(SignUp signUp) {
+		signUp.dispose();
+		
 		setBounds(100, 100, 505, 405);
 		dispose();
 		contentPane = new JLabel();		

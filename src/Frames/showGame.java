@@ -48,7 +48,7 @@ public class showGame extends JFrame {
 	int whereX;
 	int whereY;
 	private LogIn login;
-	private UserinfoRepositoryImpl ur;
+	private UserinfoRepositoryImpl ur = new UserinfoRepositoryImpl();
 	private JPanel contentPnl;
 	private JLabel scoreImg;
 	private JLabel characterImg;
@@ -93,9 +93,8 @@ public class showGame extends JFrame {
 		this.whereY = whereY;
 	}
 
-	public void grapPix(LogIn logIn ) throws IOException {
+	public void grapPix(LogIn logIn) throws IOException {
 		this.login = logIn;
-		ur = new UserinfoRepositoryImpl();
 		
 		BufferedImage img = ImageIO.read(showGame.class.getClassLoader().getResource("01.png"));
 
@@ -132,10 +131,9 @@ public class showGame extends JFrame {
 								j.setVisible(false);
 								iter.remove();
 								stopTimers();
-								dispose();
 								GameOver game = new GameOver(showGame.this);
 								game.setVisible(true);
-								ur.saveScore(myNo, login.getMyLastRound(), scoreResult, starScore, ur.getMyCharacter(login.getMyId()));
+								ur.saveScore(myNo, ur.findLastRound(myNo), scoreResult, starScore, login.getMyCharacter());
 
 							}
 						}
@@ -177,8 +175,8 @@ public class showGame extends JFrame {
 
 	public showGame(LogIn logIn) {
 		this.login = logIn;
-		ur = new UserinfoRepositoryImpl();
-		myNo = ur.getMyNo(logIn.getMyId());
+		myNo = ur.getMyNo(login.getMyId());
+		login.setMyCharacter(ur.getMyCharacter(login.getMyId()));
 		
 		//게임을 종료하기위한 메소드.
 		setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);

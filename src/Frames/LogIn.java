@@ -26,6 +26,7 @@ public class LogIn extends JFrame {
 	private String myId;
 	private int myNo;
 	private int myLastRound;
+	private int myCharacter;
 	private UserinfoRepositoryImpl ur;
 	private JLabel contentPane;
 	private JLabel[] infoTitle = new JLabel[2];
@@ -46,7 +47,17 @@ public class LogIn extends JFrame {
 			}
 		});
 	}
-
+	
+	public int getMyCharacter() {
+		myCharacter = ur.getMyCharacter(myId);
+		return myCharacter;
+	}
+	public void setMyCharacter(int myCharacter) {
+		this.myCharacter = myCharacter;
+	}
+	public int getMyNo() {
+		return myNo;
+	}
 	public int getMyLastRound() {
 		return myLastRound;
 	}

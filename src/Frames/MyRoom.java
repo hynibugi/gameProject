@@ -27,13 +27,14 @@ public class MyRoom extends JFrame implements ActionListener {
 	Image c5 = kit.getImage(classLoader.getResource("c5.gif"));
 	private Image[] cImage = {c1, c2, c3, c4, c5};
 	
-	private LogIn login;
 	private String[] cImageName = {"달리는 짱구", "자전거 짱구", "시골의 짱구", "눈사람 짱구", "우비쓴 짱구" };
 	private JLabel[] cImageNamelbl = new JLabel[5];
 	private JLabel[] cImagelbl = new JLabel[5];
 	private JLabel contentPane;
 	private JButton[] lock = new JButton[5];
 	private JButton[] choice = new JButton[5];
+	
+	private LogIn login;
 	private int myNo;
 	private UserinfoRepositoryImpl ur;
 

@@ -110,15 +110,31 @@ public class UserinfoRepositoryImpl implements UserinfoRepository {
 		return 0;
 	}
 
+	@Override
+	public int setMoney(int myNo) {
+		String sql1 = "UPDATE project_game.user SET money = (SELECT sum(roundMoney) From project_game.userscore WHERE no = ?) where no = ?";
+		
+		try (Connection conn = ConnectionProvider.makeConnection();
+				PreparedStatement stmt1 = conn.prepareStatement(sql1)) {
+			stmt1.setInt(1, myNo);
+			stmt1.setInt(2, myNo);
+
+			return stmt1.executeUpdate();
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new DataIOException(e);
+		}
+	}
 //회원의 보유머니
 	@Override
 	public int countMoney(String inputId) {
-		String sql = "SELECT money FROM project_game.user where id = ?";
+		String sql2 = "SELECT money FROM project_game.user where id = ?";
+		
 		try (Connection conn = ConnectionProvider.makeConnection();
-				PreparedStatement stmt = conn.prepareStatement(sql)) {
-			stmt.setString(1, inputId);
-
-			try (ResultSet rs = stmt.executeQuery()) {
+				PreparedStatement stmt2 = conn.prepareStatement(sql2)) {
+			stmt2.setString(1, inputId);
+			try (ResultSet rs = stmt2.executeQuery()) {
 				if (rs.next()) {
 					return rs.getInt(1);
 				}
@@ -283,7 +299,7 @@ public class UserinfoRepositoryImpl implements UserinfoRepository {
 
 	@Override
 	public int findLastRound(int myNo) {
-		String sql ="SELECT round FROM project_game.userscore WHERE no = ?";
+		String sql ="SELECT round FROM project_game.userscore WHERE no = ? order by round desc";
 		
 		try (Connection conn = ConnectionProvider.makeConnection();
 				PreparedStatement stmt = conn.prepareStatement(sql)) {
@@ -340,4 +356,25 @@ public class UserinfoRepositoryImpl implements UserinfoRepository {
 			throw new DataIOException(e);
 		}
 	}
+
+	@Override
+	public int getMyCharacter(String inputId) {
+		String sql = "SELECT gamecharacter FROM project_game.user WHERE ID = ?";
+		try (Connection conn = ConnectionProvider.makeConnection();
+				PreparedStatement stmt = conn.prepareStatement(sql)) {			
+			stmt.setString(1, inputId);	
+			try (ResultSet rs = stmt.executeQuery()) {
+				if (rs.next()) {
+					return rs.getInt(1);
+				}
+			}		
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new DataIOException(e);
+		}	
+		return 0;
+	}
+
+	
+
 }

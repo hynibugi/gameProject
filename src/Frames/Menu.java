@@ -22,7 +22,7 @@ public class Menu extends JFrame {
 	ClassLoader classLoader = getClass().getClassLoader();
 	Toolkit kit = Toolkit.getDefaultToolkit();
 	Image munuImage = kit.getImage(classLoader.getResource("menu.png"));
-
+	
 	public Menu(LogIn logIn) {
 		
 		setBounds(100, 100, 500, 400);
@@ -62,6 +62,7 @@ public class Menu extends JFrame {
 		btn_Shop.setBounds(290, 100, 100, 50);
 		btn_Shop.addActionListener(new ActionListener() {
 			
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				
@@ -69,10 +70,10 @@ public class Menu extends JFrame {
 				String myMoney = String.valueOf(ur.countMoney(inputId));
 				System.out.println(inputId);
 				System.out.println(myMoney);
-				shop sh = new shop(logIn); 
+				shop sh = new shop(logIn);
+				ur.setMoney(logIn.getMyNo());
 				sh.showMoney(myMoney);
-				sh.showGUI();
-				
+				sh.showGUI();	
 			}
 		});
 		contentPane.add(btn_Shop);

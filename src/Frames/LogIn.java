@@ -46,7 +46,9 @@ public class LogIn extends JFrame {
 			}
 		});
 	}
-
+	public int getMyNo() {
+		return myNo;
+	}
 	public int getMyLastRound() {
 		return myLastRound;
 	}

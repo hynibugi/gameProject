@@ -8,6 +8,7 @@ public interface UserinfoRepository {
 	int lastNo();
 	int standardCharacter(int lastNo);
 	int login(String inputId, String inputPassword);
+	int setMoney(int myNo);
 	int countMoney(String inputId);
 	int changeMoney(String inputId, int price);
 	int buyCharacter(String inputId, int whatCharacter);

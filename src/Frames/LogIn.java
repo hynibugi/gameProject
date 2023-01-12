@@ -13,6 +13,7 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
 import info.UserinfoRepositoryImpl;
@@ -31,7 +32,8 @@ public class LogIn extends JFrame {
 	private JLabel contentPane;
 	private JLabel[] infoTitle = new JLabel[2];
 	private String[] infoTitles = { "아이디", "비밀번호" };
-	private JTextField[] infoField = new JTextField[2];
+	private JTextField infoField = new JTextField(17);
+	private JPasswordField infoFiePw = new JPasswordField(17);
 	private JButton[] jbts = new JButton[3];
 	private String[] jbtsTitles = { "회원가입", "로그인", "메뉴얼" };
 
@@ -84,11 +86,10 @@ public class LogIn extends JFrame {
 			contentPane.add(infoTitle[i]);
 		}
 
-		for (int i = 0; i < infoField.length; i++) {
-			infoField[i] = new JTextField(17);
-			infoField[i].setBounds(248, 117 + i * 34, 116, 21);
-			contentPane.add(infoField[i]);
-		}
+		infoField.setBounds(248, 117, 116, 21);
+		infoFiePw.setBounds(248, 117 + 34, 116, 21);
+		contentPane.add(infoField);
+		contentPane.add(infoFiePw);
 
 		for (int i = 0; i < jbts.length; i++) {
 			jbts[i] = new JButton(jbtsTitles[i]);
@@ -110,8 +111,8 @@ public class LogIn extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 
-				String inputId = infoField[0].getText();
-				String inputPw = infoField[1].getText();
+				String inputId = infoField.getText();
+				String inputPw = infoFiePw.getText();
 
 				int result = ur.login(inputId, inputPw);
 

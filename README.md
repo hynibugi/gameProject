@@ -26,7 +26,7 @@
 3. 전체적인 UI 담당<br>
 4. 타이머를 통해 좌표를 계산하고 캐릭터 점프 가능하도록 구현<br>
 
-<h2>userflow</h2>
+<h2>USERFLOW</h2>
 <img width="80%" src="https://user-images.githubusercontent.com/117284093/226500371-0177fa53-9fe8-4569-ae81-2df2ae36e30f.png"/>
 
 <h2>발생이슈💥</h2>

@@ -11,7 +11,7 @@
 2. 윈도우 환경의 게임 구현 : 자바의 SWING 점핑 게임 프로그램 구현<br>
 3. 점수와 재화를 DB에 기록하고 랭킹 및 아이템 구매가 가능하도록 적용<br>
 <br>
-<h2>주요기능💻</h2>
+<h2>주요기능✅</h2>
 1. 귀여운 캐릭터와 스토리적 요소로 사용자의 몰입감을 높임<br>
 2. 데이터베이스를 활용해 재화와 점수를 기록<br>
 3. 저장된 점수로 사용자끼리 순위 경쟁 시스템 구현<br>
@@ -29,10 +29,9 @@
 <h2>userflow</h2>
 <img width="80%" src="https://user-images.githubusercontent.com/117284093/226500371-0177fa53-9fe8-4569-ae81-2df2ae36e30f.png"/>
 
-
-<h2>게임UI소개👐</h2>
-<img width="80%" src="https://user-images.githubusercontent.com/117284093/226500273-b1459f45-2279-4bb7-b90f-7365b1d30782.JPG"/>
-
+<h2>발생이슈💥</h2>
+<img width="80%" src="https://user-images.githubusercontent.com/117284093/226500800-84ab2fd7-4cd4-4d60-95b3-d84aa42eb551.png"/>
+<img width="80%" src="https://user-images.githubusercontent.com/117284093/226500834-b7fdb4aa-ec8a-4e48-8d57-fc426a63d24e.png"/>
 
 
 <h2><a href="https://blog.naver.com/1313dls/222981436046">블로그로 보러가기 💌</a></h2>
